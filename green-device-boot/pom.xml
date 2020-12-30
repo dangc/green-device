@@ -109,7 +109,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
                     <classifier>spring-boot</classifier>
-                    <mainClass>com.nuri.sample.SampleSpringApp</mainClass>
+                    <mainClass>com.nuri.green.device.GreenDeviceApp</mainClass>
                 </configuration>
                 <executions>
                     <execution>
