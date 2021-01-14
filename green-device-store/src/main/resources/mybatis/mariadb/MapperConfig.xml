@@ -19,8 +19,8 @@
         <package name="com.nuri.green.meta.store.jpo"/>
     </typeAliases>
 
-<!--    <mappers>-->
-<!--        <mapper resource="mybatis/mariadb/DcuMapper.xml"/>-->
-<!--    </mappers>-->
+    <mappers>
+        <mapper resource="mybatis/mariadb/DcuMapper.xml"/>
+    </mappers>
 
 </configuration>
