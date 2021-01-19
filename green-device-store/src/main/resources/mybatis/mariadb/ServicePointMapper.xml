@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--***********************************
+* @Copyright : nuritelecom
+* @ProjectName : green-device-store
+* @FileName : ServicePointMapper.xml
+* @Author : kh.yoon
+* @Date : 2021-01
+************************************-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.nuri.green.device.store.mapper.ServicePointMapper">
+
+    <sql id="base_where_list">
+        <where>
+            <if test="servicePointId != null and servicePointId != ''">
+                AND a.service_point_id = #{servicePointId}
+            </if>
+            <if test="servicePointNm != null and servicePointNm != ''">
+                AND a.service_point_nm like concat(#{servicePointNm},'%')
+            </if>
+            <if test="servicePointType != null and servicePointNm != ''">
+                AND a.service_point_type = #{servicePointType}
+            </if>
+            <if test="aptNo != null and aptNo != ''">
+                AND a.apt_no = #{aptNo}
+            </if>
+            <if test="locationId != null and locationId != ''">
+                AND apt.location_id = #{locationId}
+            </if>
+        </where>
+    </sql>
+
+    <sql id="order_by_list">
+        <if test="order != null">
+            <foreach collection="order" item="orderby" open="order by" index="index" separator=",">
+                ${orderby.sort} ${orderby.dir}
+            </foreach>
+        </if>
+    </sql>
+
+    <sql id="page_limit">
+        <if test="page != null ">
+            LIMIT #{page.offset}, #{page.limit}
+        </if>
+    </sql>
+
+    <select id="findAllByCondition" resultType="servicePointJpo" parameterType="servicePointJpo">
+        SELECT
+            a.service_point_id
+            , a.service_point_nm
+            , a.service_point_type
+            , fnc_get_code_nm(a.service_point_type) as service_point_type_nm
+            , a.apt_no
+            , apt.apt_nm
+            , a.dong
+            , a.ho
+            , a.remark
+            , apt.location_id
+            , a.reg_id
+            , DATE_FORMAT(a.reg_dt,'${prop.dt.plain}') as reg_dt
+            , a.update_id
+            , DATE_FORMAT(a.update_dt,'${prop.dt.plain}') as update_dt
+        FROM GND_SERVICE_POINT a
+        INNER JOIN GND_APT_INFO apt ON (a.apt_no = apt.apt_no)
+        <include refid="base_where_list"/>
+        <include refid="order_by_list"/>
+        <include refid="page_limit"/>
+    </select>
+
+    <select id="count" resultType="java.lang.Integer" parameterType="servicePointJpo">
+        SELECT
+        count(*) as co
+        FROM GND_SERVICE_POINT a
+        LEFT OUTER JOIN GND_DEVICE_INFO d ON (a.device_id = comm.device_id)
+        <include refid="base_where_list"/>
+    </select>
+
+    <select id="findById" resultType="servicePointJpo" parameterType="java.lang.Integer">
+        SELECT
+            a.service_point_id
+            , a.service_point_nm
+            , a.service_point_type
+            , fnc_get_code_nm(a.service_point_type) as service_point_type_nm
+            , a.apt_no
+            , apt.apt_nm
+            , a.dong
+            , a.ho
+            , a.remark
+            , apt.location_id
+            , a.reg_id
+            , DATE_FORMAT(a.reg_dt,'${prop.dt.plain}') as reg_dt
+            , a.update_id
+            , DATE_FORMAT(a.update_dt,'${prop.dt.plain}') as update_dt
+        FROM GND_SERVICE_POINT a
+        INNER JOIN GND_APT_INFO apt ON (a.apt_no = apt.apt_no)
+        WHERE a.service_point_id = #{servicePointId}
+    </select>
+
+    <insert id="insert" parameterType="servicePointJpo">
+        INSERT INTO GND_SERVICE_POINT (
+            service_point_id
+            , service_point_nm
+            , service_point_type
+            , apt_no
+            , dong
+            , ho
+            , remark
+            , reg_id
+            , reg_dt
+            , update_id
+            , update_dt
+        ) values (
+            #{servicePointId}
+            , #{servicePointNm}
+            , #{servicePointType}
+            , #{aptNo}
+            , #{dong}
+            , #{ho}
+            , #{remark}
+            , #{regId}
+            , now()
+            , #{updateId}
+            , now()
+        )
+    </insert>
+
+    <update id="update" parameterType="servicePointJpo">
+        UPDATE GND_SERVICE_POINT
+        <set>
+            <if test="servicePointNm != null">service_point_nm = #{servicePointNm},</if>
+            <if test="servicePointType != null">service_point_type = #{servicePointType},</if>
+            <if test="aptNo != null">apt_no = #{aptNo},</if>
+            <if test="dong != null">dong = #{dong},</if>
+            <if test="ho != null">ho = #{ho},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            update_id = #{updateId},
+            update_dt = now()
+        </set>
+        WHERE
+        service_point_id = #{servicePointId}
+    </update>
+</mapper>
