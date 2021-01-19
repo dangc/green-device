@@ -2,14 +2,16 @@ package com.nuri.green.device.store;
 
 import com.nuri.green.device.entity.Gw;
 import com.nuri.green.device.entity.GwRdo;
-import com.nuri.green.device.store.jpo.DeviceModelJpo;
 import com.nuri.green.device.store.jpo.GwJpo;
-import com.nuri.green.device.store.mapper.DeviceModelMapper;
 import com.nuri.green.device.store.mapper.GwMapper;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
+@Component
 public class GwMapperStore implements GwStore {
 
     private final GwMapper gwMapper;

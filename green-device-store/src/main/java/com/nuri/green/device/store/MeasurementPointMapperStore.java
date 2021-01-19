@@ -4,10 +4,14 @@ import com.nuri.green.device.entity.MeasurementPoint;
 import com.nuri.green.device.entity.MeasurementPointRdo;
 import com.nuri.green.device.store.jpo.MeasurementPointJpo;
 import com.nuri.green.device.store.mapper.MeasurementPointMapper;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
+@Component
 public class MeasurementPointMapperStore implements MeasurementPointStore {
 
     private final MeasurementPointMapper measurementPointMapper;

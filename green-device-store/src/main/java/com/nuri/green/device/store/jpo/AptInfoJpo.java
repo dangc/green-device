@@ -1,6 +1,7 @@
 package com.nuri.green.device.store.jpo;
 
 import com.nuri.green.device.entity.AptInfo;
+import com.nuri.green.device.entity.AptInfoLocation;
 import com.nuri.green.device.entity.AptInfoRdo;
 import com.nuri.green.page.CommonObj;
 import lombok.Getter;
@@ -22,11 +23,12 @@ public class AptInfoJpo extends CommonObj {
     private String aptType;
     private String locationId;
     private String locationIdNm;
+    private String regionId;
     private String zipcode;
     private String jibunAddr;
     private String roadAddr;
-    private int dongCnt;
-    private int hoCnt;
+    private Integer dongCnt;
+    private Integer hoCnt;
     private String telNo;
     private String remark;
     private String regId;
@@ -54,5 +56,11 @@ public class AptInfoJpo extends CommonObj {
         AptInfoRdo aptInfoRdo = new AptInfoRdo();
         BeanUtils.copyProperties(this, aptInfoRdo);
         return aptInfoRdo;
+    }
+
+    public AptInfoLocation toLocationDomain() {
+        AptInfoLocation aptInfoLocation = new AptInfoLocation();
+        BeanUtils.copyProperties(this, aptInfoLocation);
+        return aptInfoLocation;
     }
 }

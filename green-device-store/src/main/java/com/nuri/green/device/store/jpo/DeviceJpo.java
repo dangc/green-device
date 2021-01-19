@@ -1,6 +1,7 @@
 package com.nuri.green.device.store.jpo;
 
 import com.nuri.green.device.entity.Device;
+import com.nuri.green.device.entity.DeviceLocation;
 import com.nuri.green.device.entity.DeviceRdo;
 import com.nuri.green.page.CommonObj;
 import lombok.Getter;
@@ -19,6 +20,7 @@ public class DeviceJpo extends CommonObj {
     private String deviceSerial;
     private String locationId;
     private String locationNm;
+    private String regionId;
     private String deviceOid;
     private String commType;
     private String commTypeNm;
@@ -57,5 +59,11 @@ public class DeviceJpo extends CommonObj {
         DeviceRdo deviceRdo = new DeviceRdo();
         BeanUtils.copyProperties(this, deviceRdo);
         return deviceRdo;
+    }
+
+    public DeviceLocation toLocationDomain() {
+        DeviceLocation deviceLocation = new DeviceLocation();
+        BeanUtils.copyProperties(this, deviceLocation);
+        return deviceLocation;
     }
 }

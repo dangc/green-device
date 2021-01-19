@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--***********************************
+* @Copyright : nuritelecom
+* @ProjectName : green-device-store
+* @FileName : MeasurementPointMapper.xml
+* @Author : kh.yoon
+* @Date : 2021-01
+************************************-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.nuri.green.device.store.mapper.CommPointMapper">
+
+    <sql id="base_where_list">
+        <where>
+            <if test="deviceId != null and deviceId != ''" >
+                AND a.device_id = #{deviceId}
+            </if>
+            <if test="deviceSerial != null and deviceSerial != ''" >
+                AND a.device_serial like concat(#{deviceSerial},'%')
+            </if>
+            <if test="locationId != null and locationId != ''" >
+                AND a.locationId like concat(#{locationId},'%')
+            </if>
+            <if test="commType != null and commType != ''" >
+                AND a.comm_type = #{commType}
+            </if>
+            <if test="deviceType != null and deviceType != ''" >
+                AND a.device_type = #{deviceType}
+            </if>
+            <if test="nodeType != null and nodeType != ''" >
+                AND a.node_type = #{nodeType}
+            </if>
+            <if test="parentGwId != null and parentGwId != ''" >
+                AND a.parent_gw_id = #{parentGwId}
+            </if>
+            <if test="aptNo != null and aptNo != ''" >
+                AND apt.apt_no = #{aptNo}
+            </if>
+
+        </where>
+    </sql>
+
+    <sql id="order_by_list">
+        <if test="order != null" >
+            <foreach collection="order" item="orderby" open="order by" index="index" separator=",">
+                ${orderby.sort} ${orderby.dir}
+            </foreach>
+        </if>
+    </sql>
+
+    <sql id="page_limit">
+        <if test="page != null " >
+            LIMIT #{page.offset}, #{page.limit}
+        </if>
+    </sql>
+
+    <select id="findAllByCondition" resultType="deviceJpo" parameterType="deviceJpo">
+        SELECT
+            a.device_id
+            , a.device_serial
+            , a.location_id
+            , l.location_nm
+            , a.device_oid
+            , a.comm_type
+            , fnc_get_code_nm(a.comm_type) as comm_type_nm
+            , a.device_type
+            , fnc_get_code_nm(a.device_type) as device_type_nm
+            , a.node_type
+            , fnc_get_code_nm(a.node_type) as node_type_nm
+            , a.ip
+            , a.port
+            , a.allow_yn
+            , a.remark
+            , a.parent_gw_id
+            , apt.apt_no
+            , apt.apt_nm
+            , a.reg_id
+            , DATE_FORMAT(a.reg_dt,'${prop.dt.plain}') as reg_dt
+            , DATE_FORMAT(a.dest_dt,'${prop.dt.plain}') as dest_dt
+        FROM GND_DEVICE_INFO a
+        LEFT OUTER JOIN GND_COMM_POINT comm ON (a.device_id = comm.device_id)
+        LEFT OUTER JOIN GND_SERVICE_POINT s ON (s.service_point_id = comm.service_point_id)
+        LEFT OUTER JOIN GND_APT_INFO apt ON (s.apt_no = apt.apt_no)
+        INNER JOIN GND_LOCATION l ON (a.location_id = l.location_id)
+        <include refid="base_where_list" />
+        <include refid="order_by_list" />
+        <include refid="page_limit" />
+    </select>
+
+    <select id="count" resultType="java.lang.Integer" parameterType="deviceJpo">
+        SELECT
+        count(*) as co
+        FROM GND_DEVICE_INFO a
+        LEFT OUTER JOIN GND_COMM_POINT comm ON (a.device_id = comm.device_id)
+        LEFT OUTER JOIN GND_SERVICE_POINT s ON (s.service_point_id = comm.service_point_id)
+        LEFT OUTER JOIN GND_APT_INFO apt ON (s.apt_no = apt.apt_no)
+        INNER JOIN GND_LOCATION l ON (a.location_id = l.location_id)
+        <include refid="base_where_list" />
+    </select>
+
+    <select id="findById" resultType="deviceJpo" parameterType="java.lang.Integer">
+        SELECT
+        a.device_id
+        , a.device_serial
+        , a.location_id
+        , l.location_nm
+        , a.device_oid
+        , a.comm_type
+        , fnc_get_code_nm(a.comm_type) as comm_type_nm
+        , a.device_type
+        , fnc_get_code_nm(a.device_type) as device_type_nm
+        , a.node_type
+        , fnc_get_code_nm(a.node_type) as node_type_nm
+        , a.ip
+        , a.port
+        , a.allow_yn
+        , a.remark
+        , a.parent_gw_id
+        , apt.apt_no
+        , apt.apt_nm
+        , a.reg_id
+        , DATE_FORMAT(a.reg_dt,'${prop.dt.plain}') as reg_dt
+        , DATE_FORMAT(a.dest_dt,'${prop.dt.plain}') as dest_dt
+        FROM GND_DEVICE_INFO a
+        LEFT OUTER JOIN GND_COMM_POINT comm ON (a.device_id = comm.device_id)
+        LEFT OUTER JOIN GND_SERVICE_POINT s ON (s.service_point_id = comm.service_point_id)
+        LEFT OUTER JOIN GND_APT_INFO apt ON (s.apt_no = apt.apt_no)
+        INNER JOIN GND_LOCATION l ON (a.location_id = l.location_id)
+        WHERE device_id = #{deviceId}
+    </select>
+
+    <insert id="insert" parameterType="deviceJpo">
+        INSERT INTO GND_DEVICE_INFO (
+            device_id
+            , device_serial
+            , location_id
+            , device_oid
+            , comm_type
+            , device_type
+            , node_type
+            , ip
+            , port
+            , allow_yn
+            , remark
+            , parent_gw_id
+            , reg_id
+            , reg_dt
+            , dest_dt
+        ) values (
+            #{deviceId}
+            , #{deviceSerial}
+            , #{locationId}
+            , #{deviceOid}
+            , #{commType}
+            , #{deviceType}
+            , #{nodeType}
+            , #{ip}
+            , #{port}
+            , #{allowYn}
+            , #{remark}
+            , #{parentGwId}
+            , #{regId}
+            , now()
+            , DATE_FORMAT(#{destDt},'${prop.dt}')
+        )
+    </insert>
+
+    <update id="update" parameterType="deviceJpo">
+        UPDATE GND_DEVICE_INFO
+        <set>
+            <if test="deviceSerial != null">device_serial = #{deviceSerial}, </if>
+            <if test="locationId != null">location_id = #{locationId}, </if>
+            <if test="deviceOid != null">device_oid = #{deviceOid}, </if>
+            <if test="commType != null">comm_type = #{commType}, </if>
+            <if test="deviceType != null">device_type = #{deviceType}, </if>
+            <if test="nodeType != null">node_type = #{nodeType}, </if>
+            <if test="ip != null">ip = #{ip}, </if>
+            <if test="port != null">port = #{port}, </if>
+            <if test="allowYn != null">allow_yn = #{allowYn}, </if>
+            <if test="parentGwId != null">parent_gw_id = #{parentGwId}, </if>
+            reg_dt = now()
+        </set>
+        WHERE
+        device_id = #{deviceId}
+    </update>
+
+
+    <select id="findLocationById" resultType="deviceJpo" parameterType="java.lang.String">
+        SELECT
+            a.device_id
+            , a.device_serial
+            , a.location_id
+            , l.location_nm
+            , l.region_id
+        FROM GND_DEVICE_INFO a
+        INNER JOIN GND_LOCATION l on (a.location_id = l.location_id)
+        WHERE a.device_id = #{deviceId}
+    </select>
+</mapper>

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--***********************************
+* @Copyright : nuritelecom
+* @ProjectName : green-device-store
+* @FileName : MeasurementPointMapper.xml
+* @Author : kh.yoon
+* @Date : 2021-01
+************************************-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.nuri.green.device.store.mapper.DeviceModelMapper">
+
+    <sql id="base_where_list">
+        <where>
+            <if test="modelSeq != null and modelSeq != ''" >
+                AND a.model_seq = #{modelSeq}
+            </if>
+
+            <if test="modelNm != null and modelNm != ''" >
+                AND a.model_nm like concat(#{modelNm},'%')
+            </if>
+        </where>
+    </sql>
+
+    <sql id="order_by_list">
+        <if test="order != null" >
+            <foreach collection="order" item="orderby" open="order by" index="index" separator=",">
+                ${orderby.sort} ${orderby.dir}
+            </foreach>
+        </if>
+    </sql>
+
+    <sql id="page_limit">
+        <if test="page != null " >
+            LIMIT #{page.offset}, #{page.limit}
+        </if>
+    </sql>
+
+    <select id="findAllByCondition" resultType="deviceModelJpo" parameterType="deviceModelJpo">
+        SELECT
+            a.model_seq
+            , a.model_nm
+            , a.device_type
+            , fnc_get_code_nm(a.device_type) as deviceTypeNm
+            , a.vendor_seq
+            , v.vendor_nm
+            , a.reg_id
+            , DATE_FORMAT(a.reg_dt,'${prop.dt.plain}') as reg_dt
+            , a.update_id
+            , DATE_FORMAT(a.update_dt,'${prop.dt.plain}') as update_dt
+        FROM GND_DEVICE_MODEL a
+        LEFT OUTER JOIN GND_VENDOR_INFO v ON (a.vendor_seq = v.vendor_seq)
+        <include refid="base_where_list" />
+        <include refid="order_by_list" />
+        <include refid="page_limit" />
+    </select>
+
+    <select id="count" resultType="java.lang.Integer" parameterType="deviceModelJpo">
+        SELECT
+        count(*) as co
+        FROM GND_DEVICE_MODEL a
+        <include refid="base_where_list" />
+    </select>
+
+    <select id="findById" resultType="deviceModelJpo" parameterType="java.lang.Integer">
+        SELECT
+            a.model_seq
+            , a.model_nm
+            , a.device_type
+            , fnc_get_code_nm(a.device_type) as deviceTypeNm
+            , a.vendor_seq
+            , v.vendor_nm
+            , a.reg_id
+            , DATE_FORMAT(a.reg_dt,'${prop.dt.plain}') as reg_dt
+            , a.update_id
+            , DATE_FORMAT(a.update_dt,'${prop.dt.plain}') as update_dt
+        FROM GND_DEVICE_MODEL a
+        LEFT OUTER JOIN GND_VENDOR_INFO v ON (a.vendor_seq = v.vendor_seq)
+        WHERE model_seq = #{modelSeq}
+    </select>
+
+    <insert id="insert" parameterType="deviceModelJpo">
+        INSERT INTO GND_DEVICE_MODEL (
+            model_nm
+            , device_type
+            , vendor_seq
+            , reg_id
+            , reg_dt
+            , update_id
+            , update_dt
+        ) values (
+            #{modelNm}
+            , #{deviceType}
+            , #{vendorSeq}
+            , #{regId}
+            , now()
+            , #{updateId}
+            , now()
+        )
+    </insert>
+
+    <update id="update" parameterType="deviceModelJpo">
+        UPDATE GND_DEVICE_MODEL
+        <set>
+            <if test="modelNm != null">model_nm = #{modelNm}, </if>
+            <if test="deviceType != null">device_type = #{deviceType}, </if>
+            <if test="vendorSeq != null">vendor_seq = #{vendorSeq}, </if>
+            update_id = #{updateId},
+            update_dt = now()
+        </set>
+        WHERE
+            model_seq = #{modelSeq}
+    </update>
+
+</mapper>

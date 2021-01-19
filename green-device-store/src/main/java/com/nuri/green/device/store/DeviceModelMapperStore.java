@@ -2,13 +2,16 @@ package com.nuri.green.device.store;
 
 import com.nuri.green.device.entity.DeviceModel;
 import com.nuri.green.device.entity.DeviceModelRdo;
-import com.nuri.green.device.store.jpo.DeviceJpo;
 import com.nuri.green.device.store.jpo.DeviceModelJpo;
 import com.nuri.green.device.store.mapper.DeviceModelMapper;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
+@Component
 public class DeviceModelMapperStore implements DeviceModelStore {
 
     private final DeviceModelMapper deviceModelMapper;

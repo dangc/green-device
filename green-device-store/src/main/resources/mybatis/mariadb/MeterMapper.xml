@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--***********************************
+* @Copyright : nuritelecom
+* @ProjectName : green-device-store
+* @FileName : MeterMapper.xml
+* @Author : kh.yoon
+* @Date : 2021-01
+************************************-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.nuri.green.device.store.mapper.MeterMapper">
+
+    <sql id="base_where_list">
+        <where>
+            <if test="meterId != null and meterId != ''">
+                AND a.meter_id = #{meterId}
+            </if>
+            <if test="meterSerial != null and meterSerial != ''">
+                AND a.meter_serial like concat(#{meterSerial},'%')
+            </if>
+            <if test="deviceId != null and deviceId != ''">
+                AND a.device_id = #{deviceId}
+            </if>
+            <if test="meterType != null and meterType != ''">
+                AND a.meter_type = #{meterType}
+            </if>
+            <if test="energyType != null and energyType != ''">
+                AND a.energy_type = #{energyType}
+            </if>
+            <if test="locationId != null and locationId != ''">
+                AND a.location_id like concat(#{locationId},'%')
+            </if>
+        </where>
+    </sql>
+
+    <sql id="order_by_list">
+        <if test="order != null">
+            <foreach collection="order" item="orderby" open="order by" index="index" separator=",">
+                ${orderby.sort} ${orderby.dir}
+            </foreach>
+        </if>
+    </sql>
+
+    <sql id="page_limit">
+        <if test="page != null ">
+            LIMIT #{page.offset}, #{page.limit}
+        </if>
+    </sql>
+
+    <select id="findAllByCondition" resultType="meterJpo" parameterType="meterJpo">
+        SELECT
+            a.meter_id
+            , a.meter_serial
+            , a.device_id
+            , d.device_serial
+            , d.device_type
+            , fnc_get_code_nm(d.device_type) as device_type_nm
+            , a.meter_type
+            , fnc_get_code_nm(a.meter_type) as meter_type_nm
+            , a.energy_type
+            , fnc_get_code_nm(a.energy_type) as energy_type_nm
+            , a.meter_phase
+            , fnc_get_code_nm(a.meter_phase) as meter_phase_nm
+            , a.model_seq
+            , m.model_nm
+            , a.ip
+            , a.port
+            , a.cosem_device_name
+            , a.prog_id
+            , a.prog_version
+            , a.acon
+            , a.rcon
+            , a.pcon
+            , a.billing_day
+            , a.lp_interval
+            , a.avg_vol_cur_interval
+            , a.inst_vol_cur_interval
+            , a.net_metering
+            , a.location_id
+            , l.location_nm
+            , DATE_FORMAT(a.install_dt,'${prop.dt.plain}') as install_dt
+            , DATE_FORMAT(a.reg_dt,'${prop.dt.plain}') as reg_dt
+            , DATE_FORMAT(a.dest_dt,'${prop.dt.plain}') as dest_dt
+            , a.mfg_dt
+        FROM GND_METER_INFO a
+        INNER JOIN GND_DEVICE_INFO d ON (a.device_id = d.device_id)
+        INNER JOIN GND_LOCATION l ON (a.location_id = l.location_id)
+        LEFT OUTER JOIN GND_DEVICE_MODEL m ON (a.model_seq = m.model_seq)
+        <include refid="base_where_list"/>
+        <include refid="order_by_list"/>
+        <include refid="page_limit"/>
+    </select>
+
+    <select id="count" resultType="java.lang.Integer" parameterType="meterJpo">
+        SELECT
+        count(*) as co
+        FROM GND_METER_INFO a
+        LEFT OUTER JOIN GND_DEVICE_INFO d ON (a.device_id = comm.device_id)
+        <include refid="base_where_list"/>
+    </select>
+
+    <select id="findById" resultType="meterJpo" parameterType="java.lang.Integer">
+        SELECT
+            a.meter_id
+            , a.meter_serial
+            , a.device_id
+            , d.device_serial
+            , d.device_type
+            , fnc_get_code_nm(d.device_type) as device_type_nm
+            , a.meter_type
+            , fnc_get_code_nm(a.meter_type) as meter_type_nm
+            , a.energy_type
+            , fnc_get_code_nm(a.energy_type) as energy_type_nm
+            , a.meter_phase
+            , fnc_get_code_nm(a.meter_phase) as meter_phase_nm
+            , a.model_seq
+            , m.model_nm
+            , a.ip
+            , a.port
+            , a.cosem_device_name
+            , a.prog_id
+            , a.prog_version
+            , a.acon
+            , a.rcon
+            , a.pcon
+            , a.billing_day
+            , a.lp_interval
+            , a.avg_vol_cur_interval
+            , a.inst_vol_cur_interval
+            , a.net_metering
+            , a.location_id
+            , l.location_nm
+            , DATE_FORMAT(a.install_dt,'${prop.dt.plain}') as install_dt
+            , DATE_FORMAT(a.reg_dt,'${prop.dt.plain}') as reg_dt
+            , DATE_FORMAT(a.dest_dt,'${prop.dt.plain}') as dest_dt
+            , a.mfg_dt
+        FROM GND_METER_INFO a
+        INNER JOIN GND_DEVICE_INFO d ON (a.device_id = d.device_id)
+        INNER JOIN GND_LOCATION l ON (a.location_id = l.location_id)
+        LEFT OUTER JOIN GND_DEVICE_MODEL m ON (a.model_seq = m.model_seq)
+        WHERE a.meter_id = #{meterId}
+    </select>
+
+    <insert id="insert" parameterType="meterJpo">
+        INSERT INTO GND_METER_INFO (
+            meter_serial
+            , device_id
+            , meter_type
+            , energy_type
+            , meter_phase
+            , model_seq
+            , ip
+            , port
+            , cosem_device_name
+            , prog_id
+            , prog_version
+            , acon
+            , rcon
+            , pcon
+            , billing_day
+            , lp_interval
+            , avg_vol_cur_interval
+            , inst_vol_cur_interval
+            , net_metering
+            , location_id
+            , mtime
+            , itime
+            , install_dt
+            , reg_dt
+            , dest_dt
+            , mfg_dt
+        ) values (
+            #{meterSerial}
+            , #{deviceId}
+            , #{meterType}
+            , #{energyType}
+            , #{meterPhase}
+            , #{modelSeq}
+            , #{ip}
+            , #{port}
+            , #{cosemDeviceName}
+            , #{progId}
+            , #{progVersion}
+            , #{acon}
+            , #{rcon}
+            , #{pcon}
+            , #{billingDay}
+            , #{lpInterval}
+            , #{avgVolCurInterval}
+            , #{instVolCurInterval}
+            , #{netMetering}
+            , #{locationId}
+            , DATE_FORMAT(#{mtime},'${prop.dt}')
+            , DATE_FORMAT(#{itime},'${prop.dt}')
+            , DATE_FORMAT(#{installDt},'${prop.dt}')
+            , DATE_FORMAT(#{regDt},'${prop.dt}')
+            , #{destDt}
+            , #{mfgDt}
+        )
+    </insert>
+
+    <update id="update" parameterType="meterJpo">
+        UPDATE GND_METER_INFO
+        <set>
+            <if test="meterSerial != null"> meter_serial = #{meterSerial},</if>
+            <if test="deviceId != null"> device_id = #{deviceId},</if>
+            <if test="meterType != null"> meter_type = #{meterType},</if>
+            <if test="energyType != null"> energy_type = #{energyType},</if>
+            <if test="meterPhase != null"> meter_phase = #{meterPhase},</if>
+            <if test="modelSeq != null"> model_seq = #{modelSeq},</if>
+            <if test="ip != null"> ip = #{ip},</if>
+            <if test="port != null"> port = #{port},</if>
+            <if test="cosemDeviceName != null"> cosem_device_name = #{cosemDeviceName},</if>
+            <if test="progId != null"> prog_id = #{progId},</if>
+            <if test="progVersion != null"> prog_version = #{progVersion},</if>
+            <if test="acon != null"> acon = #{acon},</if>
+            <if test="rcon != null"> rcon = #{rcon},</if>
+            <if test="pcon != null"> pcon = #{pcon},</if>
+            <if test="billingDay != null"> billing_day = #{billingDay},</if>
+            <if test="lpInterval != null"> lp_interval = #{lpInterval},</if>
+            <if test="avgVolCurInterval != null"> avg_vol_cur_interval = #{avgVolCurInterval},</if>
+            <if test="instVolCurInterval != null"> inst_vol_cur_interval = #{instVolCurInterval},</if>
+            <if test="netMetering != null"> net_metering = #{netMetering},</if>
+            <if test="locationId != null"> location_id = #{locationId},</if>
+            <if test="mtime != null"> mtime = DATE_FORMAT(#{mtime},'${prop.dt}'),</if>
+            <if test="itime != null"> itime = DATE_FORMAT(#{itime},'${prop.dt}'),</if>
+            <if test="installDt != null"> install_dt = DATE_FORMAT(#{installDt},'${prop.dt}'),</if>
+            <if test="destDt != null"> dest_dt = DATE_FORMAT(#{destDt},'${prop.dt}'),</if>
+            <if test="mfgDt != null"> mfg_dt= #{mfgDt},</if>
+        </set>
+        WHERE
+        meter_id = #{meterId}
+    </update>
+</mapper>

@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--***********************************
+* @Copyright : nuritelecom
+* @ProjectName : green-device-store
+* @FileName : MeasurementPointMapper.xml
+* @Author : kh.yoon
+* @Date : 2021-01
+************************************-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.nuri.green.device.store.mapper.GwMapper">
+
+    <sql id="base_where_list">
+        <where>
+            <if test="deviceId != null and deviceId != ''">
+                AND a.device_id = #{deviceId}
+            </if>
+            <if test="deviceSerial != null and deviceSerial != ''">
+                AND d.device_serial like concat(#{deviceSerial},'%')
+            </if>
+        </where>
+    </sql>
+
+    <sql id="order_by_list">
+        <if test="order != null">
+            <foreach collection="order" item="orderby" open="order by" index="index" separator=",">
+                ${orderby.sort} ${orderby.dir}
+            </foreach>
+        </if>
+    </sql>
+
+    <sql id="page_limit">
+        <if test="page != null ">
+            LIMIT #{page.offset}, #{page.limit}
+        </if>
+    </sql>
+
+    <select id="findAllByCondition" resultType="gwJpo" parameterType="gwJpo">
+        SELECT
+        a.device_id
+        , d.device_serial
+        , a.sys_location
+        , a.sys_contact
+        , a.model_seq
+        , m.model_nm
+        , a.sys_hw_version
+        , a.sys_hw_build
+        , a.sys_sw_version
+        , a.sys_sw_revision
+        , a.sys_port
+        , a.ntw_type
+        , a.ntw_app_name
+        , a.ntw_state
+        , a.ntw_gateway
+        , a.ntw_eth_ip
+        , a.ntw_eth_subnet_mask
+        , a.ntw_eth_phy
+        , a.ntw_ppp_ip
+        , a.ntw_ppp_subnet_mask
+        , a.mobile_no
+        , DATE_FORMAT(a.reg_dt,'${prop.dt.plain}') as reg_dt
+        , DATE_FORMAT(a.update_dt,'${prop.dt.plain}') as update_dt
+        FROM GND_GW_INFO a
+        INNER JOIN GND_DEVICE_INFO d ON (a.device_id = comm.device_id)
+        LEFT OUTER JOIN GND_DEVICE_MODEL m ON (a.model_seq = m.model_seq)
+        <include refid="base_where_list"/>
+        <include refid="order_by_list"/>
+        <include refid="page_limit"/>
+    </select>
+
+    <select id="count" resultType="java.lang.Integer" parameterType="gwJpo">
+        SELECT
+        count(*) as co
+        FROM GND_GW_INFO a
+        LEFT OUTER JOIN GND_DEVICE_INFO d ON (a.device_id = comm.device_id)
+        <include refid="base_where_list"/>
+    </select>
+
+    <select id="findById" resultType="gwJpo" parameterType="java.lang.Integer">
+        SELECT
+        a.device_id
+        , d.device_serial
+        , a.sys_location
+        , a.sys_contact
+        , a.model_seq
+        , m.model_nm
+        , a.sys_hw_version
+        , a.sys_hw_build
+        , a.sys_sw_version
+        , a.sys_sw_revision
+        , a.sys_port
+        , a.ntw_type
+        , a.ntw_app_name
+        , a.ntw_state
+        , a.ntw_gateway
+        , a.ntw_eth_ip
+        , a.ntw_eth_subnet_mask
+        , a.ntw_eth_phy
+        , a.ntw_ppp_ip
+        , a.ntw_ppp_subnet_mask
+        , a.mobile_no
+        , DATE_FORMAT(a.reg_dt,'${prop.dt.plain}') as reg_dt
+        , DATE_FORMAT(a.update_dt,'${prop.dt.plain}') as update_dt
+        FROM GND_GW_INFO a
+        INNER JOIN GND_DEVICE_INFO d ON (a.device_id = comm.device_id)
+        LEFT OUTER JOIN GND_DEVICE_MODEL m ON (a.model_seq = m.model_seq)
+        WHERE a.device_id = #{deviceId}
+    </select>
+
+    <insert id="insert" parameterType="gwJpo">
+        INSERT INTO GND_GW_INFO (
+        device_id
+        , device_serial
+        , sys_name
+        , sys_location
+        , sys_contact
+        , model_seq
+        , sys_hw_version
+        , sys_hw_build
+        , sys_sw_version
+        , sys_sw_revision
+        , sys_port
+        , ntw_type
+        , ntw_app_name
+        , ntw_state
+        , ntw_gateway
+        , ntw_eth_ip
+        , ntw_eth_subnet_mask
+        , ntw_eth_phy
+        , ntw_ppp_ip
+        , ntw_ppp_subnet_mask
+        , mobile_no
+        , reg_dt
+        , update_dt
+        ) values (
+        #{deviceId}
+        , #{deviceSerial}
+        , #{sysName}
+        , #{sysLocation}
+        , #{sysContact}
+        , #{modelSeq}
+        , #{sysHwVersion}
+        , #{sysHwBuild}
+        , #{sysSwVersion}
+        , #{sysSwRevision}
+        , #{sysPort}
+        , #{ntwType}
+        , #{ntwAppName}
+        , #{ntwState}
+        , #{ntwGateway}
+        , #{ntwEthIp}
+        , #{ntwEthSubnetMask}
+        , #{ntwEthPhy}
+        , #{ntwPppIp}
+        , #{ntwPppSubnetMask}
+        , #{mobileNo}
+        , now()
+        , now()
+        )
+    </insert>
+
+    <update id="update" parameterType="gwJpo">
+        UPDATE GND_GW_INFO
+        <set>
+            <if test="deviceSerial != null">device_serial = #{deviceSerial},</if>
+            <if test="sysName != null">sys_name = #{sysName},</if>
+            <if test="sysLocation != null">sys_location = #{sysLocation},</if>
+            <if test="sysContact != null">sys_contact = #{sysContact},</if>
+            <if test="modelSeq != null">model_seq = #{modelSeq},</if>
+            <if test="sysHwVersion != null">sys_hw_version = #{sysHwVersion},</if>
+            <if test="sysHwBuild != null">sys_hw_build = #{sysHwBuild},</if>
+            <if test="sysSwVersion != null">sys_sw_version = #{sysSwVersion},</if>
+            <if test="sysSwRevision != null">sys_sw_revision = #{sysSwRevision},</if>
+            <if test="sysPort != null">sys_port = #{sysPort},</if>
+            <if test="ntwType != null">ntw_type = #{ntwType},</if>
+            <if test="ntwAppName != null">ntw_app_name = #{ntwAppName},</if>
+            <if test="ntwState != null">ntw_state = #{ntwState},</if>
+            <if test="ntwGateway != null">ntw_gateway = #{ntwGateway},</if>
+            <if test="ntwEthIp != null">ntw_eth_ip = #{ntwEthIp},</if>
+            <if test="ntwEthSubnetMask != null">ntw_eth_subnet_mask = #{ntwEthSubnetMask},</if>
+            <if test="ntwEthPhy != null">ntw_eth_phy = #{ntwEthPhy},</if>
+            <if test="ntwPppIp != null">ntw_ppp_ip = #{ntwPppIp},</if>
+            <if test="ntwPppSubnetMask != null">ntw_ppp_subnet_mask = #{ntwPppSubnetMask},</if>
+            <if test="mobileNo != null">mobile_no = #{mobileNo},</if>
+            update_dt = now()
+        </set>
+        WHERE
+        device_id = #{deviceId}
+    </update>
+</mapper>

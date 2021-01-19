@@ -12,7 +12,7 @@ import org.springframework.beans.BeanUtils;
 @Getter
 @Setter
 @NoArgsConstructor
-@Alias("deviceJpo")
+@Alias("gwJpo")
 public class GwJpo extends CommonObj {
 
     private String deviceId;

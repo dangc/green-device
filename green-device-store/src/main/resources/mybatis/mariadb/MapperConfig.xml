@@ -16,11 +16,11 @@
     </settings>
 
     <typeAliases>
-        <package name="com.nuri.green.meta.store.jpo"/>
+        <package name="com.nuri.green.device.store.jpo"/>
     </typeAliases>
 
     <mappers>
-        <mapper resource="mybatis/mariadb/DcuMapper.xml"/>
+        <mapper resource="mybatis/mariadb/AptInfoMapper.xml"/>
     </mappers>
 
 </configuration>

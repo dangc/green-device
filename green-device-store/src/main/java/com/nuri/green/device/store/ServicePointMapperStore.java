@@ -4,10 +4,14 @@ import com.nuri.green.device.entity.ServicePoint;
 import com.nuri.green.device.entity.ServicePointRdo;
 import com.nuri.green.device.store.jpo.ServicePointJpo;
 import com.nuri.green.device.store.mapper.ServicePointMapper;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
+@Component
 public class ServicePointMapperStore implements ServicePointStore {
 
     private final ServicePointMapper servicePointMapper;

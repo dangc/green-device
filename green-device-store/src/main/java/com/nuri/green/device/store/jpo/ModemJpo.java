@@ -15,12 +15,12 @@ import org.springframework.beans.BeanUtils;
 @Alias("modemJpo")
 public class ModemJpo extends CommonObj {
 
-    private String deviceId;
+    private Integer deviceId;
     private String deviceSerial;
     private String modemType;
     private String modemTypeNm;
     private String nodeKind;
-    private String modelSeq;
+    private Integer modelSeq;
     private String fwVersion;
     private String fwBuild;
     private String hwVersion;

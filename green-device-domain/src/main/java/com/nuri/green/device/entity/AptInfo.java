@@ -20,8 +20,8 @@ public class AptInfo {
     private String zipcode;
     private String jibunAddr;
     private String roadAddr;
-    private int dongCnt;
-    private int hoCnt;
+    private Integer dongCnt;
+    private Integer hoCnt;
     private String telNo;
     private String remark;
     private String regId;

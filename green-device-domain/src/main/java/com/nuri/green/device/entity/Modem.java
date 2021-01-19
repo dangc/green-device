@@ -12,11 +12,11 @@ import lombok.Setter;
 @ApiModel(value = "Modem", description = "모뎀")
 public class Modem {
 
-    private String deviceId;
+    private Integer deviceId;
     private String deviceSerial;
     private String modemType;
     private String nodeKind;
-    private String modelSeq;
+    private Integer modelSeq;
     private String fwVersion;
     private String fwBuild;
     private String hwVersion;

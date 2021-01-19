@@ -4,10 +4,14 @@ import com.nuri.green.device.entity.Modem;
 import com.nuri.green.device.entity.ModemRdo;
 import com.nuri.green.device.store.jpo.ModemJpo;
 import com.nuri.green.device.store.mapper.ModemMapper;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
+@Component
 public class ModemMapperStore implements ModemStore {
 
     private final ModemMapper modemMapper;

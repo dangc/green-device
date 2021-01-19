@@ -1,7 +1,5 @@
 package com.nuri.green.device.store.jpo;
 
-import com.nuri.green.device.entity.AptInfo;
-import com.nuri.green.device.entity.AptInfoRdo;
 import com.nuri.green.device.entity.CommPoint;
 import com.nuri.green.device.entity.CommPointRdo;
 import com.nuri.green.page.CommonObj;

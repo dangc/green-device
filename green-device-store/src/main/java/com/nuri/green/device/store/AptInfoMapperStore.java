@@ -1,6 +1,7 @@
 package com.nuri.green.device.store;
 
 import com.nuri.green.device.entity.AptInfo;
+import com.nuri.green.device.entity.AptInfoLocation;
 import com.nuri.green.device.entity.AptInfoRdo;
 import com.nuri.green.device.store.jpo.AptInfoJpo;
 import com.nuri.green.device.store.mapper.AptInfoMapper;
@@ -58,5 +59,11 @@ public class AptInfoMapperStore implements AptInfoStore {
         int result = aptInfoMapper.update(aptInfoJpo);
 
         return result;
+    }
+
+    @Override
+    public AptInfoLocation findLocationById(String aptNo) {
+        AptInfoJpo aptInfoJpo = aptInfoMapper.findLocationById(aptNo);
+        return aptInfoJpo.toLocationDomain();
     }
 }

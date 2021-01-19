@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--***********************************
+* @Copyright : nuritelecom
+* @ProjectName : green-device-store
+* @FileName : ModemMapper.xml
+* @Author : kh.yoon
+* @Date : 2021-01
+************************************-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.nuri.green.device.store.mapper.ModemMapper">
+
+    <sql id="base_where_list">
+        <where>
+            <if test="deviceId != null and deviceId != ''">
+                AND a.device_id = #{deviceId}
+            </if>
+            <if test="deviceSerial != null and deviceSerial != ''">
+                AND d.device_serial like concat(#{deviceSerial},'%')
+            </if>
+        </where>
+    </sql>
+
+    <sql id="order_by_list">
+        <if test="order != null">
+            <foreach collection="order" item="orderby" open="order by" index="index" separator=",">
+                ${orderby.sort} ${orderby.dir}
+            </foreach>
+        </if>
+    </sql>
+
+    <sql id="page_limit">
+        <if test="page != null ">
+            LIMIT #{page.offset}, #{page.limit}
+        </if>
+    </sql>
+
+    <select id="findAllByCondition" resultType="deviceJpo" parameterType="deviceJpo">
+        SELECT
+            a.device_id
+            , a.device_serial
+            , a.modem_type
+            , fnc_get_code_nm(a.modem_type) as modem_type_nm
+            , a.node_kind
+            , a.model_seq
+            , m.model_nm
+            , a.fw_version
+            , a.fw_build
+            , a.hw_version
+            , a.modem_mode
+            , DATE_FORMAT(a.reg_dt,'${prop.dt.plain}') as reg_dt
+            , DATE_FORMAT(a.update_dt,'${prop.dt.plain}') as update_dt
+        FROM GND_MODEM_INFO a
+        INNER JOIN GND_DEVICE_INFO d ON (a.device_id = d.device_id)
+        LEFT OUTER JOIN GND_DEVICE_MODEL m ON (a.model_seq = m.model_seq)
+        <include refid="base_where_list"/>
+        <include refid="order_by_list"/>
+        <include refid="page_limit"/>
+    </select>
+
+    <select id="count" resultType="java.lang.Integer" parameterType="deviceJpo">
+        SELECT
+        count(*) as co
+        FROM GND_MODEM_INFO a
+        LEFT OUTER JOIN GND_DEVICE_INFO d ON (a.device_id = comm.device_id)
+        <include refid="base_where_list"/>
+    </select>
+
+    <select id="findById" resultType="deviceJpo" parameterType="java.lang.Integer">
+        SELECT
+            a.device_id
+            , a.device_serial
+            , a.modem_type
+            , fnc_get_code_nm(a.modem_type) as modem_type_nm
+            , a.node_kind
+            , a.model_seq
+            , m.model_nm
+            , a.fw_version
+            , a.fw_build
+            , a.hw_version
+            , a.modem_mode
+            , DATE_FORMAT(a.reg_dt,'${prop.dt.plain}') as reg_dt
+            , DATE_FORMAT(a.update_dt,'${prop.dt.plain}') as update_dt
+        FROM GND_MODEM_INFO a
+        INNER JOIN GND_DEVICE_INFO d ON (a.device_id = d.device_id)
+        LEFT OUTER JOIN GND_DEVICE_MODEL m ON (a.model_seq = m.model_seq)
+        WHERE a.device_id = #{deviceId}
+    </select>
+
+    <insert id="insert" parameterType="deviceJpo">
+        INSERT INTO GND_MODEM_INFO (
+            device_id
+            , device_serial
+            , modem_type
+            , node_kind
+            , model_seq
+            , fw_version
+            , fw_build
+            , hw_version
+            , modem_mode
+            , reg_dt
+            , update_dt
+        ) values (
+            #{deviceId}
+            , #{deviceSerial}
+            , #{modemType}
+            , #{nodeKind}
+            , #{modelSeq}
+            , #{fwVersion}
+            , #{fwBuild}
+            , #{hwVersion}
+            , #{modemMode}
+            , now()
+            , now()
+        )
+    </insert>
+
+    <update id="update" parameterType="deviceJpo">
+        UPDATE GND_MODEM_INFO
+        <set>
+            <if test="deviceSerial != null">device_serial = #{deviceSerial},</if>
+            <if test="modemType != null">modem_type = #{modemType},</if>
+            <if test="nodeKind != null">node_kind = #{nodeKind},</if>
+            <if test="modelSeq != null">model_seq = #{modelSeq},</if>
+            <if test="fwVersion != null">fw_version = #{fwVersion},</if>
+            <if test="fwBuild != null">fw_build = #{fwBuild},</if>
+            <if test="hwVersion != null">hw_version = #{hwVersion},</if>
+            <if test="modemMode != null">modem_mode = #{modemMode},</if>
+            update_dt = now()
+        </set>
+        WHERE
+        device_id = #{deviceId}
+    </update>
+</mapper>
