@@ -38,13 +38,7 @@ public class MeterLogic implements MeterService {
 
     @Override
     public int insert(Meter meter) {
-        int result = 0;
-
-        if(!this.existById(meter.getMeterId())) {
-            result = this.meterStore.insert(meter);
-        }
-
-        return result;
+        return this.meterStore.insert(meter);
     }
 
     @Override

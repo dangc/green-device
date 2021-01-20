@@ -34,7 +34,7 @@
         </if>
     </sql>
 
-    <select id="findAllByCondition" resultType="deviceJpo" parameterType="deviceJpo">
+    <select id="findAllByCondition" resultType="modemJpo" parameterType="modemJpo">
         SELECT
             a.device_id
             , a.device_serial
@@ -57,15 +57,15 @@
         <include refid="page_limit"/>
     </select>
 
-    <select id="count" resultType="java.lang.Integer" parameterType="deviceJpo">
+    <select id="count" resultType="java.lang.Integer" parameterType="modemJpo">
         SELECT
         count(*) as co
         FROM GND_MODEM_INFO a
-        LEFT OUTER JOIN GND_DEVICE_INFO d ON (a.device_id = comm.device_id)
+        LEFT OUTER JOIN GND_DEVICE_INFO d ON (a.device_id = d.device_id)
         <include refid="base_where_list"/>
     </select>
 
-    <select id="findById" resultType="deviceJpo" parameterType="java.lang.Integer">
+    <select id="findById" resultType="modemJpo" parameterType="java.lang.Integer">
         SELECT
             a.device_id
             , a.device_serial
@@ -86,7 +86,7 @@
         WHERE a.device_id = #{deviceId}
     </select>
 
-    <insert id="insert" parameterType="deviceJpo">
+    <insert id="insert" parameterType="modemJpo">
         INSERT INTO GND_MODEM_INFO (
             device_id
             , device_serial
@@ -114,7 +114,7 @@
         )
     </insert>
 
-    <update id="update" parameterType="deviceJpo">
+    <update id="update" parameterType="modemJpo">
         UPDATE GND_MODEM_INFO
         <set>
             <if test="deviceSerial != null">device_serial = #{deviceSerial},</if>

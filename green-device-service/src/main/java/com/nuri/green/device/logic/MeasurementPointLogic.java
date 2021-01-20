@@ -38,13 +38,7 @@ public class MeasurementPointLogic implements MeasurementPointService {
 
     @Override
     public int insert(MeasurementPoint measurementPoint) {
-        int result = 0;
-
-        if(!this.existById(measurementPoint.getMesurementPointId())) {
-            result = this.measurementPointStore.insert(measurementPoint);
-        }
-
-        return result;
+        return this.measurementPointStore.insert(measurementPoint);
     }
 
     @Override
@@ -55,7 +49,7 @@ public class MeasurementPointLogic implements MeasurementPointService {
     @Override
     public boolean existById(int measurementPointId) {
         MeasurementPoint measurementPoint = new MeasurementPoint();
-        measurementPoint.setMesurementPointId(measurementPointId);
+        measurementPoint.setMeasurementPointId(measurementPointId);
 
         int count = this.measurementPointStore.count(measurementPoint);
 

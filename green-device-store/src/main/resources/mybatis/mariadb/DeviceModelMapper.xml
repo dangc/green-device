@@ -75,10 +75,10 @@
             , DATE_FORMAT(a.update_dt,'${prop.dt.plain}') as update_dt
         FROM GND_DEVICE_MODEL a
         LEFT OUTER JOIN GND_VENDOR_INFO v ON (a.vendor_seq = v.vendor_seq)
-        WHERE model_seq = #{modelSeq}
+        WHERE a.model_seq = #{modelSeq}
     </select>
 
-    <insert id="insert" parameterType="deviceModelJpo">
+    <insert id="insert" parameterType="deviceModelJpo" useGeneratedKeys="true" keyProperty="modelSeq">
         INSERT INTO GND_DEVICE_MODEL (
             model_nm
             , device_type

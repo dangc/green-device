@@ -1,10 +1,9 @@
 package com.nuri.green.device;
 
 import com.google.gson.Gson;
-import com.nuri.green.device.entity.AptInfo;
-import com.nuri.green.device.entity.AptInfoLocation;
-import com.nuri.green.device.entity.AptInfoRdo;
-import com.nuri.green.device.spec.AptInfoService;
+import com.nuri.green.device.entity.CommPoint;
+import com.nuri.green.device.entity.CommPointRdo;
+import com.nuri.green.device.spec.CommPointService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,59 +19,52 @@ import java.util.List;
 public class CommPointTest {
 
     @Autowired
-    AptInfoService aptInfoService;
+    CommPointService commPointService;
 
     @Test
     public void test() {
-        AptInfoRdo aptInfoRdo = aptInfoService.findById("A13580204");
+        CommPointRdo commPointRdo = commPointService.findById(1);
 
-        log.info("test : {}", aptInfoRdo.getAptNm());
+        log.info("deviceRdo :: {}", new Gson().toJson(commPointRdo));
     }
 
     @Test
     public void test2() {
-        AptInfo aptInfo = new AptInfo();
-        aptInfo.setAptNo("A13580204");
-        int count = aptInfoService.count(aptInfo);
+        CommPoint commPoint = new CommPoint();
+        commPoint.setCommPointId(1);
+        int count = commPointService.count(commPoint);
 
         log.info("count :: {}", count);
     }
 
     @Test
     public void test3() {
-        AptInfo aptInfo = new AptInfo();
-        aptInfo.setAptNo("A13580204");
-        List<AptInfoRdo> lists = aptInfoService.findAllByCondition(aptInfo);
+        CommPoint commPoint = new CommPoint();
+        commPoint.setCommPointId(1);
+        List<CommPointRdo> lists = commPointService.findAllByCondition(commPoint);
 
         log.info("lists :: {}", new Gson().toJson(lists));
     }
 
     @Test
     public void test4() {
-        AptInfo aptInfo = new AptInfo();
-        aptInfo.setAptNo("A13580204");
-        aptInfo.setAptNm("개포주공2단지");
-        aptInfo.setUpdateId("system");
-        int result = aptInfoService.update(aptInfo);
+        CommPoint commPoint = new CommPoint();
+        commPoint.setCommPointId(1);
+        commPoint.setServicePointId(1);
+        int result = commPointService.update(commPoint);
         log.info("result :: {}", result);
     }
 
 //    @Test
     public void test5() {
-        AptInfo aptInfo = new AptInfo();
-        aptInfo.setAptNo("100000");
-        aptInfo.setAptNm("개포주공12단지");
-        aptInfo.setLocationId("1168010300");
-        aptInfo.setRegId("system");
-        aptInfo.setUpdateId("system");
-        int result = aptInfoService.insert(aptInfo);
+        CommPoint commPoint = new CommPoint();
+        commPoint.setServicePointId(1);
+        commPoint.setDeviceId(1);
+        commPoint.setDeviceSerial("1001");
+        commPoint.setRegId("system");
+        commPoint.setUpdateId("system");
+        int result = commPointService.insert(commPoint);
         log.info("result :: {}", result);
     }
 
-    @Test
-    public void test6() {
-
-        AptInfoLocation result = aptInfoService.findLocationById("A13580204");
-        log.info("result :: {}", new Gson().toJson(result));
-    }
 }

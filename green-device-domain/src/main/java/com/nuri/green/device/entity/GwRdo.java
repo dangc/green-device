@@ -11,12 +11,12 @@ import lombok.Setter;
 @ApiModel(value = "GwRdo", description = "게이트웨이정보 조회정보")
 public class GwRdo {
 
-    private String deviceId;
+    private Integer deviceId;
     private String deviceSerial;
     private String sysName;
     private String sysLocation;
     private String sysContact;
-    private String modelSeq;
+    private Integer modelSeq;
     private String modelNm;
     private String sysHwVersion;
     private String sysHwBuild;

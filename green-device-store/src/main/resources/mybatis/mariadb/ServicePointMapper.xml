@@ -70,7 +70,7 @@
         SELECT
         count(*) as co
         FROM GND_SERVICE_POINT a
-        LEFT OUTER JOIN GND_DEVICE_INFO d ON (a.device_id = comm.device_id)
+        INNER JOIN GND_APT_INFO apt ON (a.apt_no = apt.apt_no)
         <include refid="base_where_list"/>
     </select>
 
@@ -95,10 +95,9 @@
         WHERE a.service_point_id = #{servicePointId}
     </select>
 
-    <insert id="insert" parameterType="servicePointJpo">
+    <insert id="insert" parameterType="servicePointJpo" useGeneratedKeys="true" keyProperty="servicePointId">
         INSERT INTO GND_SERVICE_POINT (
-            service_point_id
-            , service_point_nm
+            service_point_nm
             , service_point_type
             , apt_no
             , dong
@@ -109,8 +108,7 @@
             , update_id
             , update_dt
         ) values (
-            #{servicePointId}
-            , #{servicePointNm}
+            #{servicePointNm}
             , #{servicePointType}
             , #{aptNo}
             , #{dong}

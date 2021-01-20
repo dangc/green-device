@@ -29,7 +29,7 @@ public class DeviceJpo extends CommonObj {
     private String nodeType;
     private String nodeTypeNm;
     private String ip;
-    private int port;
+    private Integer port;
     private String allowYn;
     private String remark;
     private String parentGwId;

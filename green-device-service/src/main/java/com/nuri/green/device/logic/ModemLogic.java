@@ -38,13 +38,7 @@ public class ModemLogic implements ModemService {
 
     @Override
     public int insert(Modem modem) {
-        int result = 0;
-
-        if(!this.existById(modem.getDeviceId())) {
-            result = this.modemStore.insert(modem);
-        }
-
-        return result;
+        return this.modemStore.insert(modem);
     }
 
     @Override

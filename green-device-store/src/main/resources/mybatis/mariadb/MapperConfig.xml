@@ -21,6 +21,16 @@
 
     <mappers>
         <mapper resource="mybatis/mariadb/AptInfoMapper.xml"/>
+        <mapper resource="mybatis/mariadb/CommPointMapper.xml"/>
+        <mapper resource="mybatis/mariadb/DeviceMapper.xml"/>
+        <mapper resource="mybatis/mariadb/DeviceModelMapper.xml"/>
+        <mapper resource="mybatis/mariadb/DeviceStatusMapper.xml"/>
+        <mapper resource="mybatis/mariadb/GwMapper.xml"/>
+        <mapper resource="mybatis/mariadb/MeasurementPointMapper.xml"/>
+        <mapper resource="mybatis/mariadb/MeterMapper.xml"/>
+        <mapper resource="mybatis/mariadb/ModemMapper.xml"/>
+        <mapper resource="mybatis/mariadb/ServicePointMapper.xml"/>
+        <mapper resource="mybatis/mariadb/VendorMapper.xml"/>
     </mappers>
 
 </configuration>

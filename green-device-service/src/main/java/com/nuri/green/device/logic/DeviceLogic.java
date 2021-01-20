@@ -39,13 +39,7 @@ public class DeviceLogic implements DeviceService {
 
     @Override
     public int insert(Device device) {
-        int result = 0;
-
-        if(!this.existById(device.getDeviceId())) {
-            result = this.deviceStore.insert(device);
-        }
-
-        return result;
+        return this.deviceStore.insert(device);
     }
 
     @Override
@@ -66,4 +60,5 @@ public class DeviceLogic implements DeviceService {
             return false;
         }
     }
+
 }

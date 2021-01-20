@@ -11,7 +11,7 @@ import lombok.Setter;
 @ApiModel(value = "MeasurementPointRdo", description = "계측점")
 public class MeasurementPointRdo {
 
-    private Integer mesurementPointId;
+    private Integer measurementPointId;
     private Integer servicePointId;
     private String servicePointNm;
     private Integer meterId;

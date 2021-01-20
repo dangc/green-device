@@ -38,13 +38,7 @@ public class CommPointLogic implements CommPointService {
 
     @Override
     public int insert(CommPoint commPoint) {
-        int result = 0;
-
-        if(!this.existById(commPoint.getCommPointId())) {
-            result = this.commPointStore.insert(commPoint);
-        }
-
-        return result;
+        return this.commPointStore.insert(commPoint);
     }
 
     @Override

@@ -38,13 +38,7 @@ public class DeviceModelLogic implements DeviceModelService {
 
     @Override
     public int insert(DeviceModel deviceModel) {
-        int result = 0;
-
-        if(!this.existById(deviceModel.getModelSeq())) {
-            result = this.deviceModelStore.insert(deviceModel);
-        }
-
-        return result;
+        return this.deviceModelStore.insert(deviceModel);
     }
 
     @Override

@@ -13,7 +13,7 @@ import lombok.Setter;
 public class CommPoint {
 
     private Integer commPointId;
-    private String servicePointId;
+    private Integer servicePointId;
     private Integer deviceId;
     private String deviceSerial;
     private String remark;

@@ -20,6 +20,7 @@ public class ServicePointRdo {
     private String dong;
     private String ho;
     private String remark;
+    private String locationId;
     private String regId;
     private String regDt;
     private String updateId;

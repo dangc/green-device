@@ -20,7 +20,7 @@
             </if>
 
             <if test="locationId != null and locationId != ''" >
-                AND a.location_id like concat(#{locationId},'%')
+                AND apt.location_id like concat(#{locationId},'%')
             </if>
         </where>
     </sql>
@@ -48,8 +48,8 @@
             , a.device_serial
             , apt.apt_no
             , apt.apt_nm
-            , apt.dong
-            , apt.ho
+            , s.dong
+            , s.ho
             , l.location_id
             , l.location_nm
             , a.remark
@@ -59,7 +59,7 @@
         FROM GND_COMM_POINT a
         INNER JOIN GND_SERVICE_POINT s ON (a.service_point_id = s.service_point_id)
         LEFT OUTER JOIN GND_APT_INFO apt ON (s.apt_no = apt.apt_no)
-        INNER JOIN GND_LOCATION l on (a.location_id = l.location_id)
+        INNER JOIN GND_LOCATION l on (apt.location_id = l.location_id)
         <include refid="base_where_list" />
         <include refid="order_by_list" />
         <include refid="page_limit" />
@@ -69,10 +69,13 @@
         SELECT
         count(*) as co
         FROM GND_COMM_POINT a
+        INNER JOIN GND_SERVICE_POINT s ON (a.service_point_id = s.service_point_id)
+        LEFT OUTER JOIN GND_APT_INFO apt ON (s.apt_no = apt.apt_no)
+        INNER JOIN GND_LOCATION l on (apt.location_id = l.location_id)
         <include refid="base_where_list" />
     </select>
 
-    <select id="findById" resultType="commPointJpo" parameterType="java.lang.String">
+    <select id="findById" resultType="commPointJpo" parameterType="java.lang.Integer">
         SELECT
             a.comm_point_id
             , a.service_point_id
@@ -81,8 +84,8 @@
             , a.device_serial
             , apt.apt_no
             , apt.apt_nm
-            , apt.dong
-            , apt.ho
+            , s.dong
+            , s.ho
             , l.location_id
             , l.location_nm
             , a.remark
@@ -92,14 +95,13 @@
         FROM GND_COMM_POINT a
         INNER JOIN GND_SERVICE_POINT s ON (a.service_point_id = s.service_point_id)
         LEFT OUTER JOIN GND_APT_INFO apt ON (s.apt_no = apt.apt_no)
-        INNER JOIN GND_LOCATION l on (a.location_id = l.location_id)
-        WHERE comm_point_id = #{commPointId}
+        INNER JOIN GND_LOCATION l on (apt.location_id = l.location_id)
+        WHERE a.comm_point_id = #{commPointId}
     </select>
 
     <insert id="insert" parameterType="commPointJpo">
         INSERT INTO GND_COMM_POINT (
-            comm_point_id
-            , service_point_id
+            service_point_id
             , device_id
             , device_serial
             , remark
@@ -108,8 +110,7 @@
             , update_id
             , update_dt
         ) values (
-            #{commPointId}
-            , #{servicePointId}
+            #{servicePointId}
             , #{deviceId}
             , #{deviceSerial}
             , #{remark}

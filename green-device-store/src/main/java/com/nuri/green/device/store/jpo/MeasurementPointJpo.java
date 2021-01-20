@@ -17,7 +17,7 @@ import org.springframework.beans.BeanUtils;
 @Alias("measurementPointJpo")
 public class MeasurementPointJpo extends CommonObj {
 
-    private Integer mesurementPointId;
+    private Integer measurementPointId;
     private Integer servicePointId;
     private String servicePointNm;
     private Integer meterId;

@@ -15,12 +15,12 @@ import org.springframework.beans.BeanUtils;
 @Alias("gwJpo")
 public class GwJpo extends CommonObj {
 
-    private String deviceId;
+    private Integer deviceId;
     private String deviceSerial;
     private String sysName;
     private String sysLocation;
     private String sysContact;
-    private String modelSeq;
+    private Integer modelSeq;
     private String modelNm;
     private String sysHwVersion;
     private String sysHwBuild;

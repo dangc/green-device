@@ -20,7 +20,7 @@ public class Device {
     private String deviceType;
     private String nodeType;
     private String ip;
-    private int port;
+    private Integer port;
     private String allowYn;
     private String remark;
     private String parentGwId;

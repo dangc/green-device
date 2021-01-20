@@ -38,13 +38,7 @@ public class VendorLogic implements VendorService {
 
     @Override
     public int insert(Vendor vendor) {
-        int result = 0;
-
-        if(!this.existById(vendor.getVendorSeq())) {
-            result = this.vendorStore.insert(vendor);
-        }
-
-        return result;
+        return this.vendorStore.insert(vendor);
     }
 
     @Override

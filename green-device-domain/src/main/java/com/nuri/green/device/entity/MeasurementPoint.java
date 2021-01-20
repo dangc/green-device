@@ -12,7 +12,7 @@ import lombok.Setter;
 @ApiModel(value = "MeasurementPoint", description = "계측점")
 public class MeasurementPoint {
 
-    private Integer mesurementPointId;
+    private Integer measurementPointId;
     private Integer servicePointId;
     private Integer meterId;
     private String meterSerial;

@@ -95,7 +95,7 @@
         WHERE a.measurement_point_id = #{measurementPointId}
     </select>
 
-    <insert id="insert" parameterType="measurementPointJpo">
+    <insert id="insert" parameterType="measurementPointJpo" useGeneratedKeys="true" keyProperty="measurementPointId">
         INSERT INTO GND_MEASUREMENT_POINT (
             service_point_id
             , meter_id

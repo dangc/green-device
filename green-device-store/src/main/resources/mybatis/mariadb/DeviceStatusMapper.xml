@@ -7,12 +7,15 @@
 * @Date : 2021-01
 ************************************-->
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.nuri.green.device.store.mapper.CommPointMapper">
+<mapper namespace="com.nuri.green.device.store.mapper.DeviceStatusMapper">
 
     <sql id="base_where_list">
         <where>
             <if test="deviceId != null and deviceId != ''" >
                 AND a.device_id = #{deviceId}
+            </if>
+            <if test="deviceStatus != null and deviceStatus != ''" >
+                AND a.device_status = #{deviceStatus}
             </if>
             <if test="deviceSerial != null and deviceSerial != ''" >
                 AND d.device_serial like concat(#{deviceSerial},'%')
@@ -41,12 +44,12 @@
             , d.device_type
             , fnc_get_code_nm(d.device_type) as device_type_nm
             , a.device_status
-            , fnc_get_code_nm(d.device_status) as device_status_nm
+            , fnc_get_code_nm(a.device_status) as device_status_nm
             , DATE_FORMAT(a.init_comm_dt,'${prop.dt.plain}') as init_comm_dt
             , DATE_FORMAT(a.last_comm_dt,'${prop.dt.plain}') as last_comm_dt
             , DATE_FORMAT(a.last_reg_dt,'${prop.dt.plain}') as last_reg_dt
             , DATE_FORMAT(a.last_read_dt,'${prop.dt.plain}') as last_read_dt
-            , serverId
+            , a.server_id
         FROM GND_DEVICE_STATUS a
         INNER JOIN GND_DEVICE_INFO d ON (a.device_id = d.device_id)
         <include refid="base_where_list" />
@@ -69,12 +72,12 @@
             , d.device_type
             , fnc_get_code_nm(d.device_type) as device_type_nm
             , a.device_status
-            , fnc_get_code_nm(d.device_status) as device_status_nm
+            , fnc_get_code_nm(a.device_status) as device_status_nm
             , DATE_FORMAT(a.init_comm_dt,'${prop.dt.plain}') as init_comm_dt
             , DATE_FORMAT(a.last_comm_dt,'${prop.dt.plain}') as last_comm_dt
             , DATE_FORMAT(a.last_reg_dt,'${prop.dt.plain}') as last_reg_dt
             , DATE_FORMAT(a.last_read_dt,'${prop.dt.plain}') as last_read_dt
-            , serverId
+            , a.server_id
         FROM GND_DEVICE_STATUS a
         INNER JOIN GND_DEVICE_INFO d ON (a.device_id = d.device_id)
         WHERE a.device_id = #{deviceId}

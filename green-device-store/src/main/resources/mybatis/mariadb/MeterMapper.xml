@@ -94,7 +94,7 @@
         SELECT
         count(*) as co
         FROM GND_METER_INFO a
-        LEFT OUTER JOIN GND_DEVICE_INFO d ON (a.device_id = comm.device_id)
+        LEFT OUTER JOIN GND_DEVICE_INFO d ON (a.device_id = d.device_id)
         <include refid="base_where_list"/>
     </select>
 
@@ -140,7 +140,7 @@
         WHERE a.meter_id = #{meterId}
     </select>
 
-    <insert id="insert" parameterType="meterJpo">
+    <insert id="insert" parameterType="meterJpo" useGeneratedKeys="true" keyProperty="meterId">
         INSERT INTO GND_METER_INFO (
             meter_serial
             , device_id
@@ -192,7 +192,7 @@
             , DATE_FORMAT(#{mtime},'${prop.dt}')
             , DATE_FORMAT(#{itime},'${prop.dt}')
             , DATE_FORMAT(#{installDt},'${prop.dt}')
-            , DATE_FORMAT(#{regDt},'${prop.dt}')
+            , now()
             , #{destDt}
             , #{mfgDt}
         )

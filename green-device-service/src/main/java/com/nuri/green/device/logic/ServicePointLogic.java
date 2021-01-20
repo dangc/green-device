@@ -38,13 +38,7 @@ public class ServicePointLogic implements ServicePointService {
 
     @Override
     public int insert(ServicePoint servicePoint) {
-        int result = 0;
-
-        if(!this.existById(servicePoint.getServicePointId())) {
-            result = this.servicePointStore.insert(servicePoint);
-        }
-
-        return result;
+        return this.servicePointStore.insert(servicePoint);
     }
 
     @Override

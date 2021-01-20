@@ -60,7 +60,7 @@
         , DATE_FORMAT(a.reg_dt,'${prop.dt.plain}') as reg_dt
         , DATE_FORMAT(a.update_dt,'${prop.dt.plain}') as update_dt
         FROM GND_GW_INFO a
-        INNER JOIN GND_DEVICE_INFO d ON (a.device_id = comm.device_id)
+        INNER JOIN GND_DEVICE_INFO d ON (a.device_id = d.device_id)
         LEFT OUTER JOIN GND_DEVICE_MODEL m ON (a.model_seq = m.model_seq)
         <include refid="base_where_list"/>
         <include refid="order_by_list"/>
@@ -71,7 +71,8 @@
         SELECT
         count(*) as co
         FROM GND_GW_INFO a
-        LEFT OUTER JOIN GND_DEVICE_INFO d ON (a.device_id = comm.device_id)
+        INNER JOIN GND_DEVICE_INFO d ON (a.device_id = d.device_id)
+        LEFT OUTER JOIN GND_DEVICE_MODEL m ON (a.model_seq = m.model_seq)
         <include refid="base_where_list"/>
     </select>
 
@@ -101,60 +102,60 @@
         , DATE_FORMAT(a.reg_dt,'${prop.dt.plain}') as reg_dt
         , DATE_FORMAT(a.update_dt,'${prop.dt.plain}') as update_dt
         FROM GND_GW_INFO a
-        INNER JOIN GND_DEVICE_INFO d ON (a.device_id = comm.device_id)
+        INNER JOIN GND_DEVICE_INFO d ON (a.device_id = d.device_id)
         LEFT OUTER JOIN GND_DEVICE_MODEL m ON (a.model_seq = m.model_seq)
         WHERE a.device_id = #{deviceId}
     </select>
 
     <insert id="insert" parameterType="gwJpo">
         INSERT INTO GND_GW_INFO (
-        device_id
-        , device_serial
-        , sys_name
-        , sys_location
-        , sys_contact
-        , model_seq
-        , sys_hw_version
-        , sys_hw_build
-        , sys_sw_version
-        , sys_sw_revision
-        , sys_port
-        , ntw_type
-        , ntw_app_name
-        , ntw_state
-        , ntw_gateway
-        , ntw_eth_ip
-        , ntw_eth_subnet_mask
-        , ntw_eth_phy
-        , ntw_ppp_ip
-        , ntw_ppp_subnet_mask
-        , mobile_no
-        , reg_dt
-        , update_dt
+            device_id
+            , device_serial
+            , sys_name
+            , sys_location
+            , sys_contact
+            , model_seq
+            , sys_hw_version
+            , sys_hw_build
+            , sys_sw_version
+            , sys_sw_revision
+            , sys_port
+            , ntw_type
+            , ntw_app_name
+            , ntw_state
+            , ntw_gateway
+            , ntw_eth_ip
+            , ntw_eth_subnet_mask
+            , ntw_eth_phy
+            , ntw_ppp_ip
+            , ntw_ppp_subnet_mask
+            , mobile_no
+            , reg_dt
+            , update_dt
         ) values (
-        #{deviceId}
-        , #{deviceSerial}
-        , #{sysName}
-        , #{sysLocation}
-        , #{sysContact}
-        , #{modelSeq}
-        , #{sysHwVersion}
-        , #{sysHwBuild}
-        , #{sysSwVersion}
-        , #{sysSwRevision}
-        , #{sysPort}
-        , #{ntwType}
-        , #{ntwAppName}
-        , #{ntwState}
-        , #{ntwGateway}
-        , #{ntwEthIp}
-        , #{ntwEthSubnetMask}
-        , #{ntwEthPhy}
-        , #{ntwPppIp}
-        , #{ntwPppSubnetMask}
-        , #{mobileNo}
-        , now()
-        , now()
+            #{deviceId}
+            , #{deviceSerial}
+            , #{sysName}
+            , #{sysLocation}
+            , #{sysContact}
+            , #{modelSeq}
+            , #{sysHwVersion}
+            , #{sysHwBuild}
+            , #{sysSwVersion}
+            , #{sysSwRevision}
+            , #{sysPort}
+            , #{ntwType}
+            , #{ntwAppName}
+            , #{ntwState}
+            , #{ntwGateway}
+            , #{ntwEthIp}
+            , #{ntwEthSubnetMask}
+            , #{ntwEthPhy}
+            , #{ntwPppIp}
+            , #{ntwPppSubnetMask}
+            , #{mobileNo}
+            , now()
+            , now()
         )
     </insert>
 

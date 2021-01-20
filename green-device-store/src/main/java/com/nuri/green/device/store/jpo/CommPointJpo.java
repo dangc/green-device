@@ -15,10 +15,10 @@ import org.springframework.beans.BeanUtils;
 @Alias("commPointJpo")
 public class CommPointJpo extends CommonObj {
 
-    private String commPointId;
-    private String servicePointId;
+    private Integer commPointId;
+    private Integer servicePointId;
     private String servicePointNm;
-    private String deviceId;
+    private Integer deviceId;
     private String deviceSerial;
     private String aptNo;
     private String aptNm;

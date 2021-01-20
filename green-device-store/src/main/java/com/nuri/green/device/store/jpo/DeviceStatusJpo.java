@@ -15,8 +15,11 @@ import org.springframework.beans.BeanUtils;
 public class DeviceStatusJpo extends CommonObj {
 
     private Integer deviceId;
+    private String deviceSerial;
     private String deviceType;
+    private String deviceTypeNm;
     private String deviceStatus;
+    private String deviceStatusNm;
     private String initCommDt;
     private String lastCommDt;
     private String lastRegDt;

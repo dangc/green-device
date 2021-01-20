@@ -74,7 +74,7 @@
         WHERE a.vendor_seq = #{vendorSeq}
     </select>
 
-    <insert id="insert" parameterType="vendorJpo">
+    <insert id="insert" parameterType="vendorJpo" useGeneratedKeys="true" keyProperty="vendorSeq">
         INSERT INTO GND_VENDOR_INFO (
             vendor_code
             , vendor_nm

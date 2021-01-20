@@ -47,8 +47,8 @@ public class MeasurementPointMapperStore implements MeasurementPointStore {
     public int insert(MeasurementPoint measurementPoint) {
         MeasurementPointJpo measurementPointJpo = new MeasurementPointJpo(measurementPoint);
         int result = measurementPointMapper.insert(measurementPointJpo);
-        if(measurementPointJpo.getMesurementPointId() != null) {
-            measurementPoint.setMesurementPointId(measurementPointJpo.getMesurementPointId());
+        if(measurementPointJpo.getMeasurementPointId() != null) {
+            measurementPoint.setMeasurementPointId(measurementPointJpo.getMeasurementPointId());
         }
         return result;
     }
