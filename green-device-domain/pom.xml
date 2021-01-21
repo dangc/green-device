@@ -69,7 +69,7 @@
 
         <dependency>
             <groupId>com.nuri.green</groupId>
-            <artifactId>green-common</artifactId>
+            <artifactId>green-commons</artifactId>
             <version>1.0</version>
         </dependency>
         <dependency>

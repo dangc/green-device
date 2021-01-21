@@ -2,7 +2,7 @@ package com.nuri.green.device.store.jpo;
 
 import com.nuri.green.device.entity.CommPoint;
 import com.nuri.green.device.entity.CommPointRdo;
-import com.nuri.green.page.CommonObj;
+import com.nuri.green.store.CommonObj;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

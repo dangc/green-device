@@ -3,7 +3,7 @@ package com.nuri.green.device.exception;
 import com.google.gson.Gson;
 import com.nuri.green.constants.ErrorCode;
 import com.nuri.green.constants.ResultCode;
-import com.nuri.green.response.ResponseMessage;
+import com.nuri.green.api.response.ResponseMessage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
