@@ -32,4 +32,5 @@ public class DeviceRdo {
     private String regId;
     private String regDt;
     private String destDt;
+    private String endpoint;
 }

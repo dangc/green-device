@@ -27,6 +27,7 @@ public class Device {
     private String regId;
     private String regDt;
     private String destDt;
+    private String endpoint;
 
     @ApiModelProperty(required = false, value = "정렬 ex)orderby=field1:asc,field2:desc")
     private String orderby; // 정렬
