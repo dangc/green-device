@@ -5,6 +5,8 @@ eureka:
     serviceUrl:
       defaultZone: http://172.16.10.191:8761/eureka
     enabled: true
+rest:
+  version: v1.0
 spring:
   profiles:
     active: local
@@ -20,7 +22,7 @@ spring:
     hikari:
       # jdbc-master
       master:
-        dirver-class-name: org.mariadb.jdbc.Driver
+        driver-class-name: org.mariadb.jdbc.Driver
         jdbc-url: jdbc:mariadb://172.16.10.191:3306/MASTER
         username: master
         password: green!!20master
@@ -41,7 +43,7 @@ spring:
     # jdbc-master
     hikari:
       master:
-        dirver-class-name: org.mariadb.jdbc.Driver
+        driver-class-name: org.mariadb.jdbc.Driver
         jdbc-url: jdbc:mariadb://172.16.10.191:3306/MASTER
         username: master
         password: green!!20master
