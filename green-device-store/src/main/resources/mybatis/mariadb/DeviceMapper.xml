@@ -32,6 +32,9 @@
             <if test="parentGwId != null and parentGwId != ''" >
                 AND a.parent_gw_id = #{parentGwId}
             </if>
+            <if test="endpoint != null and endpoint != ''" >
+                AND a.endpoint = #{endpoint}
+            </if>
             <if test="aptNo != null and aptNo != ''" >
                 AND apt.apt_no = #{aptNo}
             </if>
@@ -144,6 +147,7 @@
             , reg_id
             , reg_dt
             , dest_dt
+            , endpoint
         ) values (
             #{deviceSerial}
             , #{locationId}
@@ -159,6 +163,7 @@
             , #{regId}
             , now()
             , DATE_FORMAT(#{destDt},'${prop.dt}')
+            , #{endpoint}
         )
     </insert>
 
@@ -175,6 +180,7 @@
             <if test="port != null">port = #{port}, </if>
             <if test="allowYn != null">allow_yn = #{allowYn}, </if>
             <if test="parentGwId != null">parent_gw_id = #{parentGwId}, </if>
+            <if test="parentGwId != null">endpoint = #{endpoint}, </if>
             reg_dt = now()
         </set>
         WHERE

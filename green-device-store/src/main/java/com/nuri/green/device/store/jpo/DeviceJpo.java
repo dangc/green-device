@@ -38,6 +38,7 @@ public class DeviceJpo extends CommonObj {
     private String regId;
     private String regDt;
     private String destDt;
+    private String endpoint;
 
     public DeviceJpo(Device device) {
         if(device != null) {
