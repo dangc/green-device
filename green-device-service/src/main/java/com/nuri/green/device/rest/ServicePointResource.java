@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 @Slf4j
 @Api(value = "AptInfoResource", tags = "GREEN-DEVICE-SERVICE")
 @CrossOrigin("*")
-@RequestMapping("/green/v0.1")
+@RequestMapping("/green/v1.0")
 @RestController
 public class ServicePointResource extends AbstractBaseResource {
 
