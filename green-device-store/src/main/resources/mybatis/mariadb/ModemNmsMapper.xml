@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--***********************************
+* @Copyright : nuritelecom
+* @ProjectName : green-device-store
+* @FileName : ModemNmsMapper.xml
+* @Author : jw.park
+* @Date : 2021-01
+************************************-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.nuri.green.device.store.mapper.ModemNmsMapper">
+
+    <insert id="insert" parameterType="modemNmsJpo">
+        INSERT INTO GND_MODEM_INFO (
+            device_id
+            , nms_dt
+            , device_serial
+            , parent_device_id
+            , parent_device_serial
+            , network_channel
+            , network_key
+            , rssi
+            , lqi
+            , etx
+            , hop_count
+            , network_connection_time
+            , tx_power
+            , reg_dt
+        ) values (
+            #{deviceId}
+            , #{nmsDt}
+            , #{deviceSerial}
+            , #{parentDeviceId}
+            , #{parentDeviceSerial}
+            , #{networkChannel}
+            , #{networkKey}
+            , #{rssi}
+            , #{lqi}
+            , #{etx}
+            , #{hopCount}
+            , #{networkConnectionTime}
+            , #{txPower}
+            , now()
+        )
+    </insert>
+</mapper>
