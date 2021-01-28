@@ -4,6 +4,7 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.2.6.RELEASE</version> <!-- lookup parent from repository -->
+        <relativePath></relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -31,12 +32,12 @@
     <distributionManagement>
         <repository>
             <id>maven-releases</id>
-            <name>yoon</name>
+            <name>maven-releases</name>
             <url>http://140.238.6.30:8081/repository/maven-releases/</url>
         </repository>
         <snapshotRepository>
             <id>maven-snapshots</id>
-            <name>yoon</name>
+            <name>maven-snapshots</name>
             <url>http://140.238.6.30:8081/repository/maven-snapshots/</url>
         </snapshotRepository>
     </distributionManagement>
