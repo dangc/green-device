@@ -1,0 +1,12 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://172.16.10.191:8761/eureka
+    enabled: true
+rest:
+  version: v1.0
+spring:
+  application:
+    name: green-device
+  main:
+    allow-bean-definition-overriding: true
