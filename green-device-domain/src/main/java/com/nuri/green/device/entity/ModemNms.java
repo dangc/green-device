@@ -15,7 +15,7 @@ public class ModemNms {
     private Integer deviceId;
     private String nmsDt;
     private String deviceSerial;
-    private String parentDeviceId;
+    private Integer parentDeviceId;
     private String parentDeviceSerial;
     private Integer networkChannel;
     private String networkKey;
