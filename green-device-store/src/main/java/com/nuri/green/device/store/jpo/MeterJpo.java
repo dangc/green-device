@@ -32,18 +32,18 @@ public class MeterJpo extends CommonObj {
     private Integer modelSeq;
     private String modelNm;
     private String ip;
-    private int port;
+    private Integer port;
     private String cosemDeviceName;
     private String progId;
     private String progVersion;
-    private int acon;
-    private int rcon;
-    private int pcon;
+    private Integer acon;
+    private Integer rcon;
+    private Integer pcon;
     private String billingDay;
-    private int lpInterval;
-    private int avgVolCurInterval;
-    private int instVolCurInterval;
-    private int netMetering;
+    private Integer lpInterval;
+    private Integer avgVolCurInterval;
+    private Integer instVolCurInterval;
+    private Integer netMetering;
     private String locationId;
     private String locationNm;
     private String mtime;
@@ -52,6 +52,8 @@ public class MeterJpo extends CommonObj {
     private String regDt;
     private String destDt;
     private String mfgDt;
+    private Integer drUploadInterval;
+    private Integer drMeterReadingInterval;
 
     public MeterJpo(Meter meter) {
         if(meter != null) {

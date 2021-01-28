@@ -81,6 +81,8 @@
             , DATE_FORMAT(a.reg_dt,'${prop.dt.plain}') as reg_dt
             , DATE_FORMAT(a.dest_dt,'${prop.dt.plain}') as dest_dt
             , a.mfg_dt
+            , a.dr_upload_interval
+            , a.dr_meter_reading_interval
         FROM GND_METER_INFO a
         INNER JOIN GND_DEVICE_INFO d ON (a.device_id = d.device_id)
         INNER JOIN GND_LOCATION l ON (a.location_id = l.location_id)
@@ -133,6 +135,8 @@
             , DATE_FORMAT(a.reg_dt,'${prop.dt.plain}') as reg_dt
             , DATE_FORMAT(a.dest_dt,'${prop.dt.plain}') as dest_dt
             , a.mfg_dt
+            , a.dr_upload_interval
+            , a.dr_meter_reading_interval
         FROM GND_METER_INFO a
         INNER JOIN GND_DEVICE_INFO d ON (a.device_id = d.device_id)
         INNER JOIN GND_LOCATION l ON (a.location_id = l.location_id)
@@ -168,6 +172,8 @@
             , reg_dt
             , dest_dt
             , mfg_dt
+            , dr_upload_interval
+            , dr_meter_reading_interval
         ) values (
             #{meterSerial}
             , #{deviceId}
@@ -195,6 +201,8 @@
             , now()
             , #{destDt}
             , #{mfgDt}
+            , #{drUploadInterval}
+            , #{drMeterReadingInterval}
         )
     </insert>
 
@@ -226,6 +234,8 @@
             <if test="installDt != null"> install_dt = DATE_FORMAT(#{installDt},'${prop.dt}'),</if>
             <if test="destDt != null"> dest_dt = DATE_FORMAT(#{destDt},'${prop.dt}'),</if>
             <if test="mfgDt != null"> mfg_dt= #{mfgDt},</if>
+            <if test="drUploadInterval != null"> dr_upload_interval = #{drUploadInterval},</if>
+            <if test="drMeterReadingInterval != null"> dr_meter_reading_interval= #{drMeterReadingInterval},</if>
         </set>
         WHERE
         meter_id = #{meterId}

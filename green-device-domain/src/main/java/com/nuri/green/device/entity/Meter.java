@@ -20,18 +20,18 @@ public class Meter {
     private String meterPhase;
     private Integer modelSeq;
     private String ip;
-    private int port;
+    private Integer port;
     private String cosemDeviceName;
     private String progId;
     private String progVersion;
-    private int acon;
-    private int rcon;
-    private int pcon;
+    private Integer acon;
+    private Integer rcon;
+    private Integer pcon;
     private String billingDay;
-    private int lpInterval;
-    private int avgVolCurInterval;
-    private int instVolCurInterval;
-    private int netMetering;
+    private Integer lpInterval;
+    private Integer avgVolCurInterval;
+    private Integer instVolCurInterval;
+    private Integer netMetering;
     private String locationId;
     private String mtime;
     private String itime;
@@ -39,6 +39,8 @@ public class Meter {
     private String regDt;
     private String destDt;
     private String mfgDt;
+    private Integer drUploadInterval;
+    private Integer drMeterReadingInterval;
 
     @ApiModelProperty(required = false, value = "정렬 ex)orderby=field1:asc,field2:desc")
     private String orderby; // 정렬
