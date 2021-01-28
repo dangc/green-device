@@ -1,16 +1,13 @@
 package com.nuri.green.device.rest;
 
+import com.nuri.green.api.response.ResponseMessage;
 import com.nuri.green.constants.ErrorCode;
 import com.nuri.green.constants.ResultCode;
-import com.nuri.green.device.entity.Device;
-import com.nuri.green.device.entity.DeviceRdo;
 import com.nuri.green.device.entity.Gw;
 import com.nuri.green.device.entity.GwRdo;
 import com.nuri.green.device.exception.AbstractBaseResource;
-import com.nuri.green.device.spec.DeviceService;
 import com.nuri.green.device.spec.GwService;
 import com.nuri.green.store.page.PagingGridResult;
-import com.nuri.green.api.response.ResponseMessage;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;

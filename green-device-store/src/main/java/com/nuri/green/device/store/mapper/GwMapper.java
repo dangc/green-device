@@ -1,6 +1,5 @@
 package com.nuri.green.device.store.mapper;
 
-import com.nuri.green.device.store.jpo.DeviceJpo;
 import com.nuri.green.device.store.jpo.GwJpo;
 import org.apache.ibatis.annotations.Mapper;
 
