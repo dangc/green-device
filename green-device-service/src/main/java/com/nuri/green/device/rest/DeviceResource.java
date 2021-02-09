@@ -3,9 +3,12 @@ package com.nuri.green.device.rest;
 import com.nuri.green.constants.ErrorCode;
 import com.nuri.green.constants.ResultCode;
 import com.nuri.green.device.entity.Device;
+import com.nuri.green.device.entity.DeviceLocation;
 import com.nuri.green.device.entity.DeviceRdo;
+import com.nuri.green.device.entity.DeviceStatusRdo;
 import com.nuri.green.device.exception.AbstractBaseResource;
 import com.nuri.green.device.spec.DeviceService;
+import com.nuri.green.device.spec.DeviceStatusService;
 import com.nuri.green.store.page.PagingGridResult;
 import com.nuri.green.api.response.ResponseMessage;
 import io.swagger.annotations.Api;
@@ -26,8 +29,12 @@ public class DeviceResource extends AbstractBaseResource {
 
     private final DeviceService deviceService;
 
-    public DeviceResource(DeviceService deviceService) {
+    private final DeviceStatusService deviceStatusService;
+
+
+    public DeviceResource(DeviceService deviceService, DeviceStatusService deviceStatusService) {
         this.deviceService = deviceService;
+        this.deviceStatusService = deviceStatusService;
     }
 
     @ApiOperation(value = "IF-GND-DEVICE-001", notes = "디바이스 상세정보 조회")
@@ -77,7 +84,7 @@ public class DeviceResource extends AbstractBaseResource {
             response = new ResponseMessage(ResultCode.Y, null);
         } else {
             String errMsg = "insert failed";
-            response = new ResponseMessage(ResultCode.N, ErrorCode.E2001, errMsg);
+            response = new ResponseMessage(ResultCode.N, ErrorCode.E5000, errMsg);
         }
         return response;
     }
@@ -97,12 +104,26 @@ public class DeviceResource extends AbstractBaseResource {
     @ApiOperation(value = "IF-GND-DEVICE-017", notes = "디바이스 지역 코드")
     @GetMapping("/devices/{deviceId}/locations")
     public ResponseMessage locations(@PathVariable int deviceId, HttpServletRequest request) {
-        return null;
+
+        ResponseMessage response = null;
+
+        DeviceLocation deviceLocation = this.deviceService.findLocationById(deviceId);
+        if(deviceLocation != null) {
+            response = new ResponseMessage(ResultCode.Y, deviceLocation);
+        }
+
+        return response;
     }
 
     @ApiOperation(value = "IF-GND-DEVICE-027", notes = "디바이스 상태 조회")
     @GetMapping("/devices/{deviceId}/status")
     public ResponseMessage status(@PathVariable int deviceId, HttpServletRequest request) {
-        return null;
+
+        ResponseMessage response = null;
+        DeviceStatusRdo deviceStatusRdo =  this.deviceStatusService.findById(deviceId);
+        if(deviceStatusRdo != null) {
+            response = new ResponseMessage(ResultCode.Y, deviceStatusRdo);
+        }
+        return response;
     }
 }

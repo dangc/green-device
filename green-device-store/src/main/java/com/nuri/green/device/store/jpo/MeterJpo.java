@@ -1,9 +1,6 @@
 package com.nuri.green.device.store.jpo;
 
-import com.nuri.green.device.entity.MeasurementPoint;
-import com.nuri.green.device.entity.MeasurementPointRdo;
-import com.nuri.green.device.entity.Meter;
-import com.nuri.green.device.entity.MeterRdo;
+import com.nuri.green.device.entity.*;
 import com.nuri.green.store.CommonObj;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -75,5 +72,11 @@ public class MeterJpo extends CommonObj {
         MeterRdo meterRdo = new MeterRdo();
         BeanUtils.copyProperties(this, meterRdo);
         return meterRdo;
+    }
+
+    public MeterLocation toLocationDomain() {
+        MeterLocation meterLocation = new MeterLocation();
+        BeanUtils.copyProperties(this, meterLocation);
+        return meterLocation;
     }
 }

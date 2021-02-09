@@ -61,7 +61,8 @@
         SELECT
         count(*) as co
         FROM GND_MODEM_INFO a
-        LEFT OUTER JOIN GND_DEVICE_INFO d ON (a.device_id = d.device_id)
+        INNER JOIN GND_DEVICE_INFO d ON (a.device_id = d.device_id)
+        LEFT OUTER JOIN GND_DEVICE_MODEL m ON (a.model_seq = m.model_seq)
         <include refid="base_where_list"/>
     </select>
 

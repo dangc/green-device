@@ -24,13 +24,4 @@ public class ModemRdo {
     private String modemMode;
     private String regDt;
     private String updateDt;
-
-    @ApiModelProperty(required = false, value = "정렬 ex)orderby=field1:asc,field2:desc")
-    private String orderby; // 정렬
-    @ApiModelProperty(required = false, value = "pagination offset 번호")
-    private Integer offset; // offset
-    @ApiModelProperty(required = false, value = "pagination limit 번호")
-    private Integer limit; // limit
-    @ApiModelProperty(required = false, value = "pagination page 번호")
-    private Integer page; // page
 }

@@ -4,6 +4,7 @@ import com.nuri.green.device.entity.Device;
 import com.nuri.green.device.entity.DeviceLocation;
 import com.nuri.green.device.entity.DeviceRdo;
 import com.nuri.green.device.store.jpo.DeviceJpo;
+import com.nuri.green.device.store.jpo.DeviceLocationJpo;
 import com.nuri.green.device.store.mapper.DeviceMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -67,10 +68,10 @@ public class DeviceMapperStore implements DeviceStore {
 
     @Override
     public DeviceLocation findLocationById(int deviceId) {
-        DeviceJpo deviceJpo = deviceMapper.findById(deviceId);
+        DeviceLocationJpo deviceLocationJpo = deviceMapper.findLocationById(deviceId);
 
-        if(deviceJpo != null) {
-            return deviceJpo.toLocationDomain();
+        if(deviceLocationJpo != null) {
+            return deviceLocationJpo.toDomain();
         } else {
             return null;
         }

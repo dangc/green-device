@@ -1,8 +1,10 @@
 package com.nuri.green.device.store;
 
 import com.nuri.green.device.entity.Meter;
+import com.nuri.green.device.entity.MeterLocation;
 import com.nuri.green.device.entity.MeterRdo;
 import com.nuri.green.device.store.jpo.MeterJpo;
+import com.nuri.green.device.store.jpo.MeterLocationJpo;
 import com.nuri.green.device.store.mapper.MeterMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -56,5 +58,16 @@ public class MeterMapperStore implements MeterStore {
         MeterJpo meterJpo = new MeterJpo(meter);
         int result = meterMapper.update(meterJpo);
         return result;
+    }
+
+    @Override
+    public MeterLocation findLocationById(int meterId) {
+        MeterLocationJpo meterLocationJpo = meterMapper.findLocationById(meterId);
+
+        if(meterLocationJpo != null) {
+            return meterLocationJpo.toDomain();
+        } else {
+            return null;
+        }
     }
 }

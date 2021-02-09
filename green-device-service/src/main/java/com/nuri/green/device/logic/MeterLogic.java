@@ -1,6 +1,7 @@
 package com.nuri.green.device.logic;
 
 import com.nuri.green.device.entity.Meter;
+import com.nuri.green.device.entity.MeterLocation;
 import com.nuri.green.device.entity.MeterRdo;
 import com.nuri.green.device.spec.MeterService;
 import com.nuri.green.device.store.MeterStore;
@@ -58,5 +59,10 @@ public class MeterLogic implements MeterService {
         } else {
             return false;
         }
+    }
+
+    @Override
+    public MeterLocation findByLocation(int meterId) {
+        return this.meterStore.findLocationById(meterId);
     }
 }

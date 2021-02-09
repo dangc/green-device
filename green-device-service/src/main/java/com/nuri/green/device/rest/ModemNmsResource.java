@@ -36,7 +36,7 @@ public class ModemNmsResource extends AbstractBaseResource {
         if(result > 0) {
             return new ResponseMessage(ResultCode.Y, null);
         } else {
-            return new ResponseMessage(ResultCode.N, ErrorCode.E2001, "insert failed");
+            return new ResponseMessage(ResultCode.N, ErrorCode.E5000, "insert failed");
         }
     }
 

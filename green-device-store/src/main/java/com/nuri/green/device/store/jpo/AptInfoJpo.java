@@ -21,6 +21,7 @@ public class AptInfoJpo extends CommonObj {
     private String buildingType;
     private String buildingTypeNm;
     private String aptType;
+    private String aptTypeNm;
     private String locationId;
     private String locationIdNm;
     private String regionId;

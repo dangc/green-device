@@ -25,7 +25,7 @@ public class AbstractBaseResource {
 
         log.error("AbstractBaseException : " + exception.getMessage());
         res.setStatus(exception.getHttpStatus().value());
-        ResponseMessage response = new ResponseMessage(ResultCode.N, ErrorCode.E0002, exception.getMessage());
+        ResponseMessage response = new ResponseMessage(ResultCode.N, ErrorCode.E5000, exception.getMessage());
         Gson gson = new Gson();
         return gson.toJson(response);
     }
@@ -33,7 +33,7 @@ public class AbstractBaseResource {
     @ExceptionHandler(IllegalArgumentException.class)
     @ResponseStatus(value=HttpStatus.BAD_REQUEST)
     public String illegalArgumentException(HttpServletRequest req, final IllegalArgumentException exception){
-        ResponseMessage response = new ResponseMessage(ResultCode.N, ErrorCode.E0002, ErrorCode.E0002.getMsg());
+        ResponseMessage response = new ResponseMessage(ResultCode.N, ErrorCode.E5000, ErrorCode.E5000.getMsg());
         return new Gson().toJson(response);
     }
 
@@ -41,7 +41,7 @@ public class AbstractBaseResource {
     @ResponseStatus(value=HttpStatus.BAD_REQUEST)
     public String HttpMessageNotReadableException(HttpServletRequest req, final HttpMessageNotReadableException exception){
         log.info(exception.toString());
-        ResponseMessage response = new ResponseMessage(ResultCode.N, ErrorCode.E0002, HttpStatus.BAD_REQUEST.toString());
+        ResponseMessage response = new ResponseMessage(ResultCode.N, ErrorCode.E5000, HttpStatus.BAD_REQUEST.toString());
         return new Gson().toJson(response);
     }
 
@@ -49,7 +49,7 @@ public class AbstractBaseResource {
     @ResponseStatus(value= HttpStatus.INTERNAL_SERVER_ERROR)
     public String exception(HttpServletRequest req, final Exception exception) {
         log.info(exception.toString());
-        ResponseMessage response = new ResponseMessage(ResultCode.N, ErrorCode.E0002, ErrorCode.E0002.getMsg());
+        ResponseMessage response = new ResponseMessage(ResultCode.N, ErrorCode.E5000, ErrorCode.E5000.getMsg());
         return new Gson().toJson(response);
     }
 }

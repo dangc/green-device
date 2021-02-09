@@ -2,6 +2,7 @@ package com.nuri.green.device.logic;
 
 import com.nuri.green.device.entity.CommPoint;
 import com.nuri.green.device.entity.Device;
+import com.nuri.green.device.entity.DeviceLocation;
 import com.nuri.green.device.entity.DeviceRdo;
 import com.nuri.green.device.spec.DeviceService;
 import com.nuri.green.device.store.DeviceStore;
@@ -61,4 +62,8 @@ public class DeviceLogic implements DeviceService {
         }
     }
 
+    @Override
+    public DeviceLocation findLocationById(int deviceId) {
+        return this.deviceStore.findLocationById(deviceId);
+    }
 }

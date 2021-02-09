@@ -70,22 +70,23 @@ public class MeasurementPointResource extends AbstractBaseResource {
         return response;
     }
 
-    @ApiOperation(value = "IF-GND-SP-008", notes = "서비스 포인트 등록")
+    @ApiOperation(value = "IF-GND-SP-012", notes = "계측점 등록")
     @PostMapping("/measurement-points")
     public ResponseMessage insert(@RequestBody MeasurementPoint measurementPoint, HttpServletRequest request) {
 
+        // TODO 동일한 서비스포인트와 미터정보가 있다면 UPDATE 해야한다.
         ResponseMessage response = null;
         int result = this.measurementPointService.insert(measurementPoint);
         if(result > 0) {
             response = new ResponseMessage(ResultCode.Y, null);
         } else {
             String errMsg = "insert failed";
-            response = new ResponseMessage(ResultCode.N, ErrorCode.E2001, errMsg);
+            response = new ResponseMessage(ResultCode.N, ErrorCode.E5000, errMsg);
         }
         return response;
     }
 
-    @ApiOperation(value = "IF-GND-SP-009", notes = "서비스 포인트 수정")
+    @ApiOperation(value = "IF-GND-SP-013", notes = "계측점 수정")
     @PutMapping("/measurement-points")
     public ResponseMessage update(@RequestBody MeasurementPoint measurementPoint, HttpServletRequest request) {
 

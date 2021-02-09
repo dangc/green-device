@@ -3,6 +3,7 @@ package com.nuri.green.device.rest;
 import com.nuri.green.constants.ErrorCode;
 import com.nuri.green.constants.ResultCode;
 import com.nuri.green.device.entity.Meter;
+import com.nuri.green.device.entity.MeterLocation;
 import com.nuri.green.device.entity.MeterRdo;
 import com.nuri.green.device.exception.AbstractBaseResource;
 import com.nuri.green.device.spec.MeterService;
@@ -77,7 +78,7 @@ public class MeterResource extends AbstractBaseResource {
             response = new ResponseMessage(ResultCode.Y, null);
         } else {
             String errMsg = "insert failed";
-            response = new ResponseMessage(ResultCode.N, ErrorCode.E2001, errMsg);
+            response = new ResponseMessage(ResultCode.N, ErrorCode.E5000, errMsg);
         }
         return response;
     }
@@ -99,13 +100,10 @@ public class MeterResource extends AbstractBaseResource {
     public ResponseMessage locations(@PathVariable int meterId, HttpServletRequest request) {
 
         ResponseMessage response = null;
+        MeterLocation meterLocation = this.meterService.findByLocation(meterId);
 
-        MeterRdo meterRdo = this.meterService.findById(meterId);
-        if (meterRdo != null) {
-            response = new ResponseMessage(ResultCode.Y, meterRdo);
-        } else {
-            String errMsg = "meter id [" + meterId + "] does not exist.";
-            response = new ResponseMessage(ResultCode.N, ErrorCode.E2001, errMsg);
+        if (meterLocation != null) {
+            response = new ResponseMessage(ResultCode.Y, meterLocation);
         }
 
         return response;

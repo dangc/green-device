@@ -53,6 +53,7 @@
             , l.location_id
             , l.location_nm
             , a.remark
+            , a.reg_id
             , DATE_FORMAT(a.reg_dt,'${prop.dt.plain}') as reg_dt
             , a.update_id
             , DATE_FORMAT(a.update_dt,'${prop.dt.plain}') as update_dt
@@ -89,6 +90,7 @@
             , l.location_id
             , l.location_nm
             , a.remark
+            , a.reg_id
             , DATE_FORMAT(a.reg_dt,'${prop.dt.plain}') as reg_dt
             , a.update_id
             , DATE_FORMAT(a.update_dt,'${prop.dt.plain}') as update_dt

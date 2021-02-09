@@ -1,6 +1,7 @@
 package com.nuri.green.device.store.mapper;
 
 import com.nuri.green.device.store.jpo.MeterJpo;
+import com.nuri.green.device.store.jpo.MeterLocationJpo;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -17,4 +18,6 @@ public interface MeterMapper {
     int insert(MeterJpo meterJpo);
 
     int update(MeterJpo meterJpo);
+
+    MeterLocationJpo findLocationById(int meterId);
 }

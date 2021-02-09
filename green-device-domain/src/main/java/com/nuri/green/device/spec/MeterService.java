@@ -1,6 +1,7 @@
 package com.nuri.green.device.spec;
 
 import com.nuri.green.device.entity.Meter;
+import com.nuri.green.device.entity.MeterLocation;
 import com.nuri.green.device.entity.MeterRdo;
 
 import java.util.List;
@@ -18,4 +19,6 @@ public interface MeterService {
     int update(Meter meter);
 
     boolean existById(int meterId);
+
+    MeterLocation findByLocation(int meterId);
 }

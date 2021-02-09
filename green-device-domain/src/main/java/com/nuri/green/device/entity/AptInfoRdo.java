@@ -14,8 +14,8 @@ public class AptInfoRdo {
     private String aptNo;
     private String aptNm;
     private String buildingType;
-    private String buildingTypeNm;
     private String aptType;
+    private String aptTypeNm;
     private String locationId;
     private String locationIdNm;
     private String zipcode;

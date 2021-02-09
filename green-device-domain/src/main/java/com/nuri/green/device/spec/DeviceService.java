@@ -1,9 +1,6 @@
 package com.nuri.green.device.spec;
 
-import com.nuri.green.device.entity.Device;
-import com.nuri.green.device.entity.DeviceModel;
-import com.nuri.green.device.entity.DeviceModelRdo;
-import com.nuri.green.device.entity.DeviceRdo;
+import com.nuri.green.device.entity.*;
 
 import java.util.List;
 
@@ -20,4 +17,6 @@ public interface DeviceService {
     int update(Device device);
 
     boolean existById(int deviceId);
+
+    DeviceLocation findLocationById(int deviceId);
 }

@@ -19,7 +19,7 @@ public class DeviceModelJpo extends CommonObj {
     private String modelNm;
     private String deviceType;
     private String deviceTypeNm;
-    private String vendorSeq;
+    private Integer vendorSeq;
     private String vendorNm;
     private String regId;
     private String regDt;

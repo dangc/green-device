@@ -13,6 +13,7 @@
         <module>green-device-domain</module>
         <module>green-device-service</module>
         <module>green-device-store</module>
+        <module>green-device-client</module>
     </modules>
 
 

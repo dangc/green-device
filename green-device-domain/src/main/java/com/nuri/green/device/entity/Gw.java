@@ -44,4 +44,9 @@ public class Gw {
     private Integer limit; // limit
     @ApiModelProperty(required = false, value = "pagination page 번호")
     private Integer page; // page
+
+    String toJson() {
+        return "deviceSerial="+deviceSerial+"&sysName="+sysName;
+    }
+
 }

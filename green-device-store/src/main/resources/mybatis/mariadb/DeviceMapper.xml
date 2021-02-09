@@ -18,7 +18,7 @@
                 AND a.device_serial like concat(#{deviceSerial},'%')
             </if>
             <if test="locationId != null and locationId != ''" >
-                AND a.locationId like concat(#{locationId},'%')
+                AND a.location_id like concat(#{locationId},'%')
             </if>
             <if test="commType != null and commType != ''" >
                 AND a.comm_type = #{commType}
@@ -188,7 +188,7 @@
     </update>
 
 
-    <select id="findLocationById" resultType="deviceJpo" parameterType="java.lang.Integer">
+    <select id="findLocationById" resultType="deviceLocationJpo" parameterType="java.lang.Integer">
         SELECT
             a.device_id
             , a.device_serial

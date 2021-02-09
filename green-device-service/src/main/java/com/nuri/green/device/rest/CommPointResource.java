@@ -71,13 +71,14 @@ public class CommPointResource extends AbstractBaseResource {
     @PostMapping("/comm-points")
     public ResponseMessage insert(@RequestBody CommPoint commPoint, HttpServletRequest request) {
 
+        // TODO 디바이스아이디가 이미 있다면 INSERT 할 수 없다.
         ResponseMessage response = null;
         int result = this.commPointService.insert(commPoint);
         if(result > 0) {
             response = new ResponseMessage(ResultCode.Y, null);
         } else {
             String errMsg = "insert failed";
-            response = new ResponseMessage(ResultCode.N, ErrorCode.E2001, errMsg);
+            response = new ResponseMessage(ResultCode.N, ErrorCode.E5000, errMsg);
         }
         return response;
     }

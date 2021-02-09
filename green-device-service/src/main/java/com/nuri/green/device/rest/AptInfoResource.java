@@ -79,7 +79,7 @@ public class AptInfoResource extends AbstractBaseResource {
             response = new ResponseMessage(ResultCode.Y, aptInfoLocation);
         } else {
             String errMsg = "apt_no [" + aptNo + "] does not exist.";
-            response = new ResponseMessage(ResultCode.N, ErrorCode.E2001, errMsg);
+            response = new ResponseMessage(ResultCode.N, ErrorCode.E5000, errMsg);
         }
 
         return response;
@@ -95,7 +95,7 @@ public class AptInfoResource extends AbstractBaseResource {
             response = new ResponseMessage(ResultCode.Y, null);
         } else {
             String errMsg = "insert failed";
-            response = new ResponseMessage(ResultCode.N, ErrorCode.E2001, errMsg);
+            response = new ResponseMessage(ResultCode.N, ErrorCode.E5000, errMsg);
         }
         return response;
     }

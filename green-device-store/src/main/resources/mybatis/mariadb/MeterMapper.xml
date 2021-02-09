@@ -85,7 +85,7 @@
             , a.dr_meter_reading_interval
         FROM GND_METER_INFO a
         INNER JOIN GND_DEVICE_INFO d ON (a.device_id = d.device_id)
-        INNER JOIN GND_LOCATION l ON (a.location_id = l.location_id)
+        LEFT OUTER JOIN GND_LOCATION l ON (a.location_id = l.location_id)
         LEFT OUTER JOIN GND_DEVICE_MODEL m ON (a.model_seq = m.model_seq)
         <include refid="base_where_list"/>
         <include refid="order_by_list"/>
@@ -96,7 +96,9 @@
         SELECT
         count(*) as co
         FROM GND_METER_INFO a
-        LEFT OUTER JOIN GND_DEVICE_INFO d ON (a.device_id = d.device_id)
+        INNER JOIN GND_DEVICE_INFO d ON (a.device_id = d.device_id)
+        LEFT OUTER JOIN GND_LOCATION l ON (a.location_id = l.location_id)
+        LEFT OUTER JOIN GND_DEVICE_MODEL m ON (a.model_seq = m.model_seq)
         <include refid="base_where_list"/>
     </select>
 
@@ -139,7 +141,7 @@
             , a.dr_meter_reading_interval
         FROM GND_METER_INFO a
         INNER JOIN GND_DEVICE_INFO d ON (a.device_id = d.device_id)
-        INNER JOIN GND_LOCATION l ON (a.location_id = l.location_id)
+        LEFT OUTER JOIN GND_LOCATION l ON (a.location_id = l.location_id)
         LEFT OUTER JOIN GND_DEVICE_MODEL m ON (a.model_seq = m.model_seq)
         WHERE a.meter_id = #{meterId}
     </select>
@@ -240,4 +242,16 @@
         WHERE
         meter_id = #{meterId}
     </update>
+
+    <select id="findLocationById" resultType="meterLocationJpo" parameterType="java.lang.Integer">
+        SELECT
+        a.meter_id
+        , a.meter_serial
+        , a.location_id
+        , l.location_nm
+        , l.region_id
+        FROM GND_METER_INFO a
+        INNER JOIN GND_LOCATION l on (a.location_id = l.location_id)
+        WHERE a.meter_id = #{meterId}
+    </select>
 </mapper>

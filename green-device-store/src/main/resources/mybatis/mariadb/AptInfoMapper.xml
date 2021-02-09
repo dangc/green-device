@@ -45,6 +45,8 @@
             a.apt_no
             , a.apt_nm
             , a.building_type
+            , a.apt_type
+            , fnc_get_code_nm(a.apt_type) as apt_type_nm
             , a.location_id
             , l.location_nm
             , a.zipcode
@@ -77,6 +79,8 @@
             a.apt_no
             , a.apt_nm
             , a.building_type
+            , a.apt_type
+            , fnc_get_code_nm(a.apt_type) as apt_type_nm
             , a.location_id
             , l.location_nm
             , a.zipcode
