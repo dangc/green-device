@@ -1,6 +1,7 @@
 package com.nuri.green.device.store;
 
 import com.nuri.green.device.entity.MeasurementPoint;
+import com.nuri.green.device.entity.MeasurementPointLogRdo;
 import com.nuri.green.device.entity.MeasurementPointRdo;
 
 import java.util.List;
@@ -16,4 +17,6 @@ public interface MeasurementPointStore {
     int insert(MeasurementPoint measurementPoint);
 
     int update(MeasurementPoint measurementPoint);
+
+    List<MeasurementPointLogRdo> measurementPointLog(MeasurementPoint measurementPoint);
 }

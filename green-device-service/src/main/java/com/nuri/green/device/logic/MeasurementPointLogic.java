@@ -1,6 +1,7 @@
 package com.nuri.green.device.logic;
 
 import com.nuri.green.device.entity.MeasurementPoint;
+import com.nuri.green.device.entity.MeasurementPointLogRdo;
 import com.nuri.green.device.entity.MeasurementPointRdo;
 import com.nuri.green.device.spec.MeasurementPointService;
 import com.nuri.green.device.store.MeasurementPointStore;
@@ -58,5 +59,10 @@ public class MeasurementPointLogic implements MeasurementPointService {
         } else {
             return false;
         }
+    }
+
+    @Override
+    public List<MeasurementPointLogRdo> measurementPointLog(MeasurementPoint measurementPoint) {
+        return this.measurementPointStore.measurementPointLog(measurementPoint);
     }
 }

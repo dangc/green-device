@@ -1,6 +1,7 @@
 package com.nuri.green.device.logic;
 
 import com.nuri.green.device.entity.CommPoint;
+import com.nuri.green.device.entity.CommPointLogRdo;
 import com.nuri.green.device.entity.CommPointRdo;
 import com.nuri.green.device.spec.CommPointService;
 import com.nuri.green.device.store.CommPointStore;
@@ -58,5 +59,10 @@ public class CommPointLogic implements CommPointService {
         } else {
             return false;
         }
+    }
+
+    @Override
+    public List<CommPointLogRdo> commPointLog(CommPoint commPoint) {
+        return this.commPointStore.commPointLog(commPoint);
     }
 }

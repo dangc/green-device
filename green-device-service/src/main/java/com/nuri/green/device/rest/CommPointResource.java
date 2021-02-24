@@ -94,4 +94,24 @@ public class CommPointResource extends AbstractBaseResource {
         }
         return response;
     }
+
+    @ApiOperation(value = "IF-GND-SP-018", notes = "통신서비스 변경 목록")
+    @GetMapping("/comm-points/log")
+    public ResponseMessage commPointLog(CommPoint commPoint, HttpServletRequest request) {
+
+        ResponseMessage response = null;
+
+        PagingGridResult result = new PagingGridResult();
+        result.setDatas(this.commPointService.commPointLog(commPoint));
+        result.setTotalCnt(result.getDatas().size());
+
+        if (result != null) {
+            response = new ResponseMessage(ResultCode.Y, result);
+        } else {
+            String errMsg = ErrorCode.E2001.getMsg();
+            response = new ResponseMessage(ResultCode.N, ErrorCode.E2001, errMsg);
+        }
+
+        return response;
+    }
 }

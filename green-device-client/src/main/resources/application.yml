@@ -1,7 +1,7 @@
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://172.16.10.191:8761/eureka
+      defaultZone: http://175.125.23.122:8761/eureka
     enabled: true
 rest:
   version: v1.0

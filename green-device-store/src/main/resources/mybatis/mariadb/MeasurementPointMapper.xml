@@ -11,11 +11,14 @@
 
     <sql id="base_where_list">
         <where>
-            <if test="measurementPointId != null and measurementPointId != ''">
+            <if test="measurementPointId != null">
                 AND a.measurement_point_id = #{measurementPointId}
             </if>
-            <if test="servicePointId != null and servicePointId != ''">
+            <if test="servicePointId != null">
                 AND a.service_point_id = #{servicePointId}
+            </if>
+            <if test="meterId != null">
+                AND a.meter_id = #{meterId}
             </if>
             <if test="locationId != null and locationId != ''">
                 AND apt.location_id like concat(#{locationId},'%')
@@ -39,20 +42,20 @@
 
     <select id="findAllByCondition" resultType="measurementPointJpo" parameterType="measurementPointJpo">
         SELECT
-            a.measurement_point_id
-            , a.service_point_id
-            , s.service_point_nm
-            , a.meter_id
-            , a.meter_serial
-            , s.apt_no
-            , apt.apt_nm
-            , l.location_id
-            , l.location_nm
-            , a.remark
-            , a.reg_id
-            , DATE_FORMAT(a.reg_dt,'${prop.dt.plain}') as reg_dt
-            , a.update_id
-            , DATE_FORMAT(a.update_dt,'${prop.dt.plain}') as update_dt
+        a.measurement_point_id
+        , a.service_point_id
+        , s.service_point_nm
+        , a.meter_id
+        , a.meter_serial
+        , s.apt_no
+        , apt.apt_nm
+        , l.location_id
+        , l.location_nm
+        , a.remark
+        , a.reg_id
+        , DATE_FORMAT(a.reg_dt,'${prop.dt.plain}') as reg_dt
+        , a.update_id
+        , DATE_FORMAT(a.update_dt,'${prop.dt.plain}') as update_dt
         FROM GND_MEASUREMENT_POINT a
         INNER JOIN GND_SERVICE_POINT s ON (a.service_point_id = s.service_point_id)
         INNER JOIN GND_APT_INFO apt ON (s.apt_no = apt.apt_no)
@@ -74,20 +77,20 @@
 
     <select id="findById" resultType="measurementPointJpo" parameterType="java.lang.Integer">
         SELECT
-            a.measurement_point_id
-            , a.service_point_id
-            , s.service_point_nm
-            , a.meter_id
-            , a.meter_serial
-            , s.apt_no
-            , apt.apt_nm
-            , l.location_id
-            , l.location_nm
-            , a.remark
-            , a.reg_id
-            , DATE_FORMAT(a.reg_dt,'${prop.dt.plain}') as reg_dt
-            , a.update_id
-            , DATE_FORMAT(a.update_dt,'${prop.dt.plain}') as update_dt
+        a.measurement_point_id
+        , a.service_point_id
+        , s.service_point_nm
+        , a.meter_id
+        , a.meter_serial
+        , s.apt_no
+        , apt.apt_nm
+        , l.location_id
+        , l.location_nm
+        , a.remark
+        , a.reg_id
+        , DATE_FORMAT(a.reg_dt,'${prop.dt.plain}') as reg_dt
+        , a.update_id
+        , DATE_FORMAT(a.update_dt,'${prop.dt.plain}') as update_dt
         FROM GND_MEASUREMENT_POINT a
         INNER JOIN GND_SERVICE_POINT s ON (a.service_point_id = s.service_point_id)
         INNER JOIN GND_APT_INFO apt ON (s.apt_no = apt.apt_no)
@@ -97,23 +100,23 @@
 
     <insert id="insert" parameterType="measurementPointJpo" useGeneratedKeys="true" keyProperty="measurementPointId">
         INSERT INTO GND_MEASUREMENT_POINT (
-            service_point_id
-            , meter_id
-            , meter_serial
-            , remark
-            , reg_id
-            , reg_dt
-            , update_id
-            , update_dt
+        service_point_id
+        , meter_id
+        , meter_serial
+        , remark
+        , reg_id
+        , reg_dt
+        , update_id
+        , update_dt
         ) values (
-            #{servicePointId}
-            , #{meterId}
-            , #{meterSerial}
-            , #{remark}
-            , #{regId}
-            , now()
-            , #{updateId}
-            , now()
+        #{servicePointId}
+        , #{meterId}
+        , #{meterSerial}
+        , #{remark}
+        , #{regId}
+        , now()
+        , #{updateId}
+        , now()
         )
     </insert>
 
@@ -130,4 +133,57 @@
         WHERE
         measurement_point_id = #{measurementPointId}
     </update>
+
+    <select id="measurementPointLog" resultType="measurementPointLogJpo" parameterType="measurementPointJpo">
+        SELECT
+            a.measurement_point_id
+            , a.seq_no
+            , DATE_FORMAT(a.chg_dt,'${prop.dt.plain}') as chg_dt
+            , a.service_point_id
+            , a.meter_id
+            , a.meter_serial
+            , a.apt_no
+            , a.dong
+            , a.ho
+            , a.remark
+            , a.reg_id
+            , DATE_FORMAT(a.reg_dt,'${prop.dt.plain}') as reg_dt
+        FROM GND_MEASUREMENT_POINT_LOG a
+<!--        INNER JOIN GND_SERVICE_POINT s ON (a.service_point_id = s.service_point_id)-->
+<!--        INNER JOIN GND_APT_INFO apt ON (s.apt_no = apt.apt_no)-->
+<!--        INNER JOIN GND_LOCATION l ON (apt.location_id = l.location_id)-->
+        <include refid="base_where_list"/>
+        <include refid="order_by_list"/>
+        <include refid="page_limit"/>
+    </select>
+
+    <insert id="addMeasurementPointLog" parameterType="measurementPointLogJpo" useGeneratedKeys="true" keyProperty="measurementPointId">
+        INSERT INTO GND_MEASUREMENT_POINT_LOG (
+            seq_no
+            , measurement_point_id
+            , chg_dt
+            , service_point_id
+            , meter_id
+            , meter_serial
+            , apt_no
+            , dong
+            , ho
+            , remark
+            , reg_id
+            , reg_dt
+        ) values (
+            #{seqNo}
+            , #{measurementPointId}
+            , #{regDt}
+            , #{servicePointId}
+            , #{meterId}
+            , #{meterSerial}
+            , #{aptNo}
+            , #{dong}
+            , #{ho}
+            , #{remark}
+            , #{regId}
+            , now()
+        )
+    </insert>
 </mapper>

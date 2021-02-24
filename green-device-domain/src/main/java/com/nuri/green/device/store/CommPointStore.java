@@ -1,6 +1,7 @@
 package com.nuri.green.device.store;
 
 import com.nuri.green.device.entity.CommPoint;
+import com.nuri.green.device.entity.CommPointLogRdo;
 import com.nuri.green.device.entity.CommPointRdo;
 
 import java.util.List;
@@ -16,4 +17,6 @@ public interface CommPointStore {
     int insert(CommPoint commPoint);
 
     int update(CommPoint commPoint);
+
+    List<CommPointLogRdo> commPointLog(CommPoint commPoint);
 }

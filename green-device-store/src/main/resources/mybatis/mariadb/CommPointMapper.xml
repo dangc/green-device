@@ -11,14 +11,16 @@
 
     <sql id="base_where_list">
         <where>
-            <if test="commPointId != null and commPointId != ''" >
+            <if test="commPointId != null" >
                 AND a.comm_point_id = #{commPointId}
             </if>
 
-            <if test="servicePointId != null and servicePointId != ''" >
+            <if test="servicePointId != null" >
                 AND a.service_point_id = #{servicePointId}
             </if>
-
+            <if test="deviceId != null">
+                AND a.device_id = #{deviceId}
+            </if>
             <if test="locationId != null and locationId != ''" >
                 AND apt.location_id like concat(#{locationId},'%')
             </if>
@@ -137,4 +139,56 @@
         comm_point_id = #{commPointId}
     </update>
 
+    <select id="commPointLog" resultType="commPointLogJpo" parameterType="commPointJpo">
+        SELECT
+            a.comm_point_id
+            , a.seq_no
+            , DATE_FORMAT(a.chg_dt,'${prop.dt.plain}') as chg_dt
+            , a.service_point_id
+            , a.device_id
+            , a.device_serial
+            , a.apt_no
+            , a.dong
+            , a.ho
+            , a.remark
+            , a.reg_id
+            , DATE_FORMAT(a.reg_dt,'${prop.dt.plain}') as reg_dt
+        FROM GND_COMM_POINT_LOG a
+        <!--        INNER JOIN GND_SERVICE_POINT s ON (a.service_point_id = s.service_point_id)-->
+        <!--        INNER JOIN GND_APT_INFO apt ON (s.apt_no = apt.apt_no)-->
+        <!--        INNER JOIN GND_LOCATION l ON (apt.location_id = l.location_id)-->
+        <include refid="base_where_list"/>
+        <include refid="order_by_list"/>
+        <include refid="page_limit"/>
+    </select>
+
+    <insert id="addCommPointLog" parameterType="commPointLogJpo" useGeneratedKeys="true" keyProperty="commPointId">
+        INSERT INTO GND_COMM_POINT_LOG (
+            seq_no
+            , comm_point_id
+            , chg_dt
+            , service_point_id
+            , device_id
+            , device_serial
+            , apt_no
+            , dong
+            , ho
+            , remark
+            , reg_id
+            , reg_dt
+        ) values (
+            #{seqNo}
+            , #{commPointId}
+            , #{regDt}
+            , #{servicePointId}
+            , #{deviceId}
+            , #{deviceSerial}
+            , #{aptNo}
+            , #{dong}
+            , #{ho}
+            , #{remark}
+            , #{regId}
+            , now()
+        )
+    </insert>
 </mapper>

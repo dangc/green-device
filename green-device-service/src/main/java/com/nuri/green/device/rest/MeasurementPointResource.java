@@ -97,4 +97,24 @@ public class MeasurementPointResource extends AbstractBaseResource {
         }
         return response;
     }
+
+    @ApiOperation(value = "IF-GND-SP-014", notes = "계측점 변경 목록 조회")
+    @GetMapping("/measurement-points/log")
+    public ResponseMessage measurementPointLog(MeasurementPoint measurementPoint, HttpServletRequest request) {
+
+        ResponseMessage response = null;
+
+        PagingGridResult result = new PagingGridResult();
+        result.setDatas(this.measurementPointService.measurementPointLog(measurementPoint));
+        result.setTotalCnt(result.getDatas().size());
+
+        if (result != null && result.getDatas().size() != 0) {
+            response = new ResponseMessage(ResultCode.Y, result);
+        } else {
+            String errMsg = ErrorCode.E2001.getMsg();
+            response = new ResponseMessage(ResultCode.N, ErrorCode.E2001, errMsg);
+        }
+
+        return response;
+    }
 }

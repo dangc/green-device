@@ -1,6 +1,7 @@
 package com.nuri.green.device.spec;
 
 import com.nuri.green.device.entity.MeasurementPoint;
+import com.nuri.green.device.entity.MeasurementPointLogRdo;
 import com.nuri.green.device.entity.MeasurementPointRdo;
 
 import java.util.List;
@@ -18,4 +19,6 @@ public interface MeasurementPointService {
     int update(MeasurementPoint measurementPoint);
 
     boolean existById(int measurementPointId);
+
+    List<MeasurementPointLogRdo> measurementPointLog(MeasurementPoint measurementPoint);
 }
