@@ -1,7 +1,10 @@
 package com.nuri.green.device.store;
 
+import com.nuri.green.device.entity.HouseHold;
+import com.nuri.green.device.entity.HouseHoldRdo;
 import com.nuri.green.device.entity.ServicePoint;
 import com.nuri.green.device.entity.ServicePointRdo;
+import com.nuri.green.device.store.jpo.HouseHoldJpo;
 import com.nuri.green.device.store.jpo.ServicePointJpo;
 import com.nuri.green.device.store.mapper.ServicePointMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -60,5 +63,11 @@ public class ServicePointMapperStore implements ServicePointStore {
         ServicePointJpo servicePointJpo = new ServicePointJpo(servicePoint);
         int result = servicePointMapper.update(servicePointJpo);
         return result;
+    }
+
+    @Override
+    public List<HouseHoldRdo> householdMoveLog(HouseHold houseHold) {
+        List<HouseHoldJpo> houseHoldJpos = servicePointMapper.householdMoveLog(new HouseHoldJpo(houseHold));
+        return houseHoldJpos.stream().map(HouseHoldJpo::toDomain).collect(Collectors.toList());
     }
 }

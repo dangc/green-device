@@ -1,5 +1,7 @@
 package com.nuri.green.device.store;
 
+import com.nuri.green.device.entity.HouseHold;
+import com.nuri.green.device.entity.HouseHoldRdo;
 import com.nuri.green.device.entity.ServicePoint;
 import com.nuri.green.device.entity.ServicePointRdo;
 
@@ -16,4 +18,6 @@ public interface ServicePointStore {
     int insert(ServicePoint servicePoint);
 
     int update(ServicePoint servicePoint);
+
+    List<HouseHoldRdo> householdMoveLog(HouseHold houseHold);
 }

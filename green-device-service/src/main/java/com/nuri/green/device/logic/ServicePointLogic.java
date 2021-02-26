@@ -1,5 +1,7 @@
 package com.nuri.green.device.logic;
 
+import com.nuri.green.device.entity.HouseHold;
+import com.nuri.green.device.entity.HouseHoldRdo;
 import com.nuri.green.device.entity.ServicePoint;
 import com.nuri.green.device.entity.ServicePointRdo;
 import com.nuri.green.device.spec.ServicePointService;
@@ -58,5 +60,10 @@ public class ServicePointLogic implements ServicePointService {
         } else {
             return false;
         }
+    }
+
+    @Override
+    public List<HouseHoldRdo> householdMoveLog(HouseHold houseHold) {
+        return this.servicePointStore.householdMoveLog(houseHold);
     }
 }

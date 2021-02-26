@@ -93,4 +93,23 @@ public class ServicePointResource extends AbstractBaseResource {
         }
         return response;
     }
+
+    @ApiOperation(value = "IF-GND-SP-010", notes = "세대별 전입전출 목록 조회")
+    @GetMapping("/service-points/household")
+    public ResponseMessage householdMoveLog(HouseHold houseHold, HttpServletRequest request) {
+
+        ResponseMessage response = null;
+
+        PagingGridResult result = new PagingGridResult();
+        result.setDatas(this.servicePointService.householdMoveLog(houseHold));
+
+        if (result != null) {
+            response = new ResponseMessage(ResultCode.Y, result);
+        } else {
+            String errMsg = ErrorCode.E2001.getMsg();
+            response = new ResponseMessage(ResultCode.N, ErrorCode.E2001, errMsg);
+        }
+
+        return response;
+    }
 }

@@ -11,7 +11,7 @@
 
     <sql id="base_where_list">
         <where>
-            <if test="servicePointId != null and servicePointId != ''">
+            <if test="servicePointId != null">
                 AND a.service_point_id = #{servicePointId}
             </if>
             <if test="servicePointNm != null and servicePointNm != ''">
@@ -25,6 +25,14 @@
             </if>
             <if test="locationId != null and locationId != ''">
                 AND apt.location_id = #{locationId}
+            </if>
+        </where>
+    </sql>
+
+    <sql id="household_where_list">
+        <where>
+            <if test="servicePointId != null">
+                AND a.service_point_id = #{servicePointId}
             </if>
         </where>
     </sql>
@@ -136,4 +144,45 @@
         WHERE
         service_point_id = #{servicePointId}
     </update>
+
+    <select id="householdMoveLog" resultType="houseHoldJpo" parameterType="houseHoldJpo">
+        SELECT
+            a.service_point_id
+            , a.move_seq
+            , a.move_in_date
+            , a.move_out_date
+            , a.reg_id
+            , DATE_FORMAT(a.reg_dt,'${prop.dt.plain}') as reg_dt
+            , a.update_id
+            , DATE_FORMAT(a.update_dt,'${prop.dt.plain}') as update_dt
+        FROM GND_HOUSEHOLD_MOVE_LOG a
+        <!--        INNER JOIN GND_SERVICE_POINT s ON (a.service_point_id = s.service_point_id)-->
+        <!--        INNER JOIN GND_APT_INFO apt ON (s.apt_no = apt.apt_no)-->
+        <!--        INNER JOIN GND_LOCATION l ON (apt.location_id = l.location_id)-->
+        <include refid="household_where_list"/>
+        <include refid="order_by_list"/>
+        <include refid="page_limit"/>
+    </select>
+
+    <insert id="addHouseholdMoveLog" parameterType="houseHoldJpo" useGeneratedKeys="true" keyProperty="servicePointId">
+        INSERT INTO GND_HOUSEHOLD_MOVE_LOG (
+            service_point_id
+            , move_seq
+            , move_in_date
+            , move_out_date
+            , reg_id
+            , reg_dt
+            , update_id
+            , update_dt
+        ) values (
+            #{servicePointId}
+            , #{moveSeq}
+            , #{moveInDate}
+            , #{moveOutDate}
+            , #{regId}
+            , now()
+            , #{updateId}
+            , now()
+        )
+    </insert>
 </mapper>

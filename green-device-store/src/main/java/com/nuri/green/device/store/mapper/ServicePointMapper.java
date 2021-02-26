@@ -1,5 +1,6 @@
 package com.nuri.green.device.store.mapper;
 
+import com.nuri.green.device.store.jpo.HouseHoldJpo;
 import com.nuri.green.device.store.jpo.ServicePointJpo;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -17,4 +18,6 @@ public interface ServicePointMapper {
     int insert(ServicePointJpo servicePointJpo);
 
     int update(ServicePointJpo servicePointJpo);
+
+    List<HouseHoldJpo> householdMoveLog(HouseHoldJpo houseHoldJpo);
 }
