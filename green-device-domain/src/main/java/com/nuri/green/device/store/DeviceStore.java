@@ -3,6 +3,7 @@ package com.nuri.green.device.store;
 import com.nuri.green.device.entity.Device;
 import com.nuri.green.device.entity.DeviceLocation;
 import com.nuri.green.device.entity.DeviceRdo;
+import com.nuri.green.device.entity.ParentDeviceRdo;
 
 import java.util.List;
 
@@ -19,4 +20,6 @@ public interface DeviceStore {
     int update(Device device);
 
     DeviceLocation findLocationById(int deviceId);
+
+    ParentDeviceRdo getParentInfo(int deviceId);
 }

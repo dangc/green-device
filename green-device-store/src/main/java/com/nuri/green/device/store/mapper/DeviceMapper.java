@@ -2,6 +2,7 @@ package com.nuri.green.device.store.mapper;
 
 import com.nuri.green.device.store.jpo.DeviceJpo;
 import com.nuri.green.device.store.jpo.DeviceLocationJpo;
+import com.nuri.green.device.store.jpo.ParentDeviceJpo;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -20,4 +21,6 @@ public interface DeviceMapper {
     int update(DeviceJpo deviceJpo);
 
     DeviceLocationJpo findLocationById(int deviceId);
+
+    ParentDeviceJpo getParentInfo(int deviceId);
 }

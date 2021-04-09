@@ -1,11 +1,9 @@
 package com.nuri.green.device.logic;
 
-import com.nuri.green.device.entity.CommPoint;
-import com.nuri.green.device.entity.Device;
-import com.nuri.green.device.entity.DeviceLocation;
-import com.nuri.green.device.entity.DeviceRdo;
+import com.nuri.green.device.entity.*;
 import com.nuri.green.device.spec.DeviceService;
 import com.nuri.green.device.store.DeviceStore;
+import com.nuri.green.device.store.MeterStore;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,9 +16,11 @@ import java.util.List;
 public class DeviceLogic implements DeviceService {
 
     private final DeviceStore deviceStore;
+    private final MeterStore meterStore;
 
-    public DeviceLogic(DeviceStore deviceStore) {
+    public DeviceLogic(DeviceStore deviceStore, MeterStore meterStore) {
         this.deviceStore = deviceStore;
+        this.meterStore = meterStore;
     }
 
     @Override
@@ -65,5 +65,42 @@ public class DeviceLogic implements DeviceService {
     @Override
     public DeviceLocation findLocationById(int deviceId) {
         return this.deviceStore.findLocationById(deviceId);
+    }
+
+    @Override
+    public ParentDeviceRdo getParentInfo(String deviceSerial, String meterSerial) {
+        ParentDeviceRdo parentDeviceRdo = null;
+
+        if(meterSerial != null && !meterSerial.isEmpty()){
+            Meter meter = new Meter();
+            meter.setMeterSerial(meterSerial);
+            List<MeterRdo> list = meterStore.findAllByCondition(meter);
+
+            if(list.size() > 0){
+                MeterRdo rdo = list.get(0);
+                deviceSerial = rdo.getDeviceSerial();
+            }
+        }
+
+        if(deviceSerial != null && !deviceSerial.isEmpty()){
+            Device device = new Device();
+            device.setDeviceSerial(deviceSerial);
+            List<DeviceRdo> list = deviceStore.findAllByCondition(device);
+
+            if(list.size() > 0){
+                DeviceRdo rdo = list.get(0);
+                String parentId = rdo.getParentGwId();
+
+                if(parentId != null && rdo.getDeviceId() != Integer.parseInt(parentId)){
+                    parentDeviceRdo = deviceStore.getParentInfo(rdo.getDeviceId());
+                } else {
+                    parentDeviceRdo = new ParentDeviceRdo();
+                    parentDeviceRdo.setDeviceId(rdo.getDeviceId());
+                    parentDeviceRdo.setDeviceSerial(rdo.getDeviceSerial());
+                }
+            }
+        }
+
+        return parentDeviceRdo;
     }
 }

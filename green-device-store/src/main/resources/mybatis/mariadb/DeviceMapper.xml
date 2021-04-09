@@ -199,4 +199,26 @@
         INNER JOIN GND_LOCATION l on (a.location_id = l.location_id)
         WHERE a.device_id = #{deviceId}
     </select>
+
+    <select id="getParentInfo" resultType="parentDeviceJpo" parameterType="java.lang.Integer">
+        SELECT
+            di.device_id
+            , di.device_serial
+        FROM
+            gnd_device_info di,
+        (
+        SELECT
+            @r AS _id,
+            (SELECT  @r := PARENT_GW_ID
+            FROM    gnd_device_info
+            WHERE   DEVICE_ID = _id) AS parent
+        FROM
+            (SELECT  @r := #{deviceId}) vars,
+            gnd_device_info
+        WHERE
+            @r IS NOT NULL
+        ) AS p_di
+        WHERE di.DEVICE_ID = p_di._id AND di.PARENT_GW_ID IS NULL
+    </select>
+
 </mapper>

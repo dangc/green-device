@@ -3,8 +3,10 @@ package com.nuri.green.device.store;
 import com.nuri.green.device.entity.Device;
 import com.nuri.green.device.entity.DeviceLocation;
 import com.nuri.green.device.entity.DeviceRdo;
+import com.nuri.green.device.entity.ParentDeviceRdo;
 import com.nuri.green.device.store.jpo.DeviceJpo;
 import com.nuri.green.device.store.jpo.DeviceLocationJpo;
+import com.nuri.green.device.store.jpo.ParentDeviceJpo;
 import com.nuri.green.device.store.mapper.DeviceMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -72,6 +74,17 @@ public class DeviceMapperStore implements DeviceStore {
 
         if(deviceLocationJpo != null) {
             return deviceLocationJpo.toDomain();
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public ParentDeviceRdo getParentInfo(int deviceId) {
+        ParentDeviceJpo parentDeviceJpo = deviceMapper.getParentInfo(deviceId);
+
+        if(parentDeviceJpo != null) {
+            return parentDeviceJpo.toDomain();
         } else {
             return null;
         }

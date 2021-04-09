@@ -19,4 +19,7 @@ public interface DeviceService {
     boolean existById(int deviceId);
 
     DeviceLocation findLocationById(int deviceId);
+
+    ParentDeviceRdo getParentInfo(String deviceSerial, String meterSerial);
+
 }

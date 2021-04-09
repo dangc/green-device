@@ -2,10 +2,7 @@ package com.nuri.green.device.rest;
 
 import com.nuri.green.constants.ErrorCode;
 import com.nuri.green.constants.ResultCode;
-import com.nuri.green.device.entity.Device;
-import com.nuri.green.device.entity.DeviceLocation;
-import com.nuri.green.device.entity.DeviceRdo;
-import com.nuri.green.device.entity.DeviceStatusRdo;
+import com.nuri.green.device.entity.*;
 import com.nuri.green.device.exception.AbstractBaseResource;
 import com.nuri.green.device.spec.DeviceService;
 import com.nuri.green.device.spec.DeviceStatusService;
@@ -124,6 +121,29 @@ public class DeviceResource extends AbstractBaseResource {
         if(deviceStatusRdo != null) {
             response = new ResponseMessage(ResultCode.Y, deviceStatusRdo);
         }
+        return response;
+    }
+
+    @ApiOperation(value = "IF-GND-DEVICE-028", notes = "상위 디바이스 상세정보 조회")
+    @GetMapping("/devices/parent")
+    public ResponseMessage getParentInfo(String deviceSerial, String meterSerial) {
+
+        ResponseMessage response = null;
+
+        if((deviceSerial == null && meterSerial == null) ||
+            (deviceSerial.isEmpty() && meterSerial.isEmpty())){
+            response = new ResponseMessage(ResultCode.N, ErrorCode.E2001, "Parameter Null");
+        } else {
+            ParentDeviceRdo result =  this.deviceService.getParentInfo(deviceSerial, meterSerial);
+
+            if (result != null) {
+                response = new ResponseMessage(ResultCode.Y, result);
+            } else {
+                String errMsg = ErrorCode.E2001.getMsg();
+                response = new ResponseMessage(ResultCode.N, ErrorCode.E2001, errMsg);
+            }
+        }
+
         return response;
     }
 }
