@@ -131,7 +131,7 @@ public class DeviceResource extends AbstractBaseResource {
         ResponseMessage response = null;
 
         if((deviceSerial == null && meterSerial == null) ||
-            (deviceSerial.isEmpty() && meterSerial.isEmpty())){
+            ("".equals(deviceSerial) && "".equals(meterSerial))){
             response = new ResponseMessage(ResultCode.N, ErrorCode.E2001, "Parameter Null");
         } else {
             ParentDeviceRdo result =  this.deviceService.getParentInfo(deviceSerial, meterSerial);
