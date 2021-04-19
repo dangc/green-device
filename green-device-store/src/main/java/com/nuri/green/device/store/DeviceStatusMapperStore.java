@@ -24,6 +24,7 @@ public class DeviceStatusMapperStore implements DeviceStatusStore {
     @Override
     public List<DeviceStatusRdo> findAllByCondition(DeviceStatus deviceStatus) {
         List<DeviceStatusJpo> deviceStatusJpos = deviceStatusMapper.findAllByCondition(new DeviceStatusJpo(deviceStatus));
+
         return deviceStatusJpos.stream().map(DeviceStatusJpo::toDomain).collect(Collectors.toList());
     }
 

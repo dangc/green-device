@@ -9,13 +9,13 @@ public interface DeviceStatusService {
 
     List<DeviceStatusRdo> findAllByCondition(DeviceStatus deviceStatus);
 
-    int count(DeviceStatus device);
+    int count(DeviceStatus deviceStatus);
 
     DeviceStatusRdo findById(int deviceId);
 
-    int insert(DeviceStatus device);
+    int insert(DeviceStatus deviceStatus);
 
-    int update(DeviceStatus device);
+    int update(DeviceStatus deviceStatus);
 
     boolean existById(int deviceId);
 }

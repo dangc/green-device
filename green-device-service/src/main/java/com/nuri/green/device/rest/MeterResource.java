@@ -113,12 +113,10 @@ public class MeterResource extends AbstractBaseResource {
     }
 
     @ApiOperation(value = "IF-GND-DEVICE-029", notes = "미터 상태 목록 조회")
-    @GetMapping("/meter/status")
+    @GetMapping("/meters/status")
     public ResponseMessage status(MeterStatus meterStatus, HttpServletRequest request) {
 
         ResponseMessage response = null;
-
-        //TODO : meterSerial 검색 조건에 추가
 
         PagingGridResult result = new PagingGridResult();
         result.setDatas(this.meterStatusService.findAllByCondition(meterStatus));

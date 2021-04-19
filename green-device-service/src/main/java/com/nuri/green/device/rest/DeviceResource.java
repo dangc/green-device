@@ -146,4 +146,23 @@ public class DeviceResource extends AbstractBaseResource {
 
         return response;
     }
+
+    @ApiOperation(value = "IF-GND-DEVICE-030", notes = "디바이스 상태 목록 조회")
+    @GetMapping("/devices/status")
+    public ResponseMessage status(DeviceStatus deviceStatus, HttpServletRequest request) {
+
+        ResponseMessage response = null;
+
+        PagingGridResult result = new PagingGridResult();
+        result.setDatas(this.deviceStatusService.findAllByCondition(deviceStatus));
+        result.setTotalCnt(this.deviceStatusService.count(deviceStatus));
+
+        if(result != null) {
+            response = new ResponseMessage(ResultCode.Y, result);
+        }else{
+            String errMsg = ErrorCode.E2001.getMsg();
+            response = new ResponseMessage(ResultCode.N, ErrorCode.E2001, errMsg);
+        }
+        return response;
+    }
 }

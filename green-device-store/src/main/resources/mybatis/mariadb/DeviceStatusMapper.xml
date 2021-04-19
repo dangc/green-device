@@ -17,6 +17,9 @@
             <if test="deviceStatus != null and deviceStatus != ''" >
                 AND a.device_status = #{deviceStatus}
             </if>
+            <if test="deviceType != null and deviceType != ''" >
+                AND d.device_type = #{deviceType}
+            </if>
             <if test="deviceSerial != null and deviceSerial != ''" >
                 AND d.device_serial like concat(#{deviceSerial},'%')
             </if>
@@ -45,10 +48,9 @@
             , fnc_get_code_nm(d.device_type) as device_type_nm
             , a.device_status
             , fnc_get_code_nm(a.device_status) as device_status_nm
-            , DATE_FORMAT(a.init_comm_dt,'${prop.dt.plain}') as init_comm_dt
             , DATE_FORMAT(a.last_comm_dt,'${prop.dt.plain}') as last_comm_dt
-            , DATE_FORMAT(a.last_reg_dt,'${prop.dt.plain}') as last_reg_dt
-            , DATE_FORMAT(a.last_read_dt,'${prop.dt.plain}') as last_read_dt
+            , DATE_FORMAT(a.reg_dt,'${prop.dt.plain}') as reg_dt
+            , DATE_FORMAT(a.update_dt,'${prop.dt.plain}') as update_dt
             , a.server_id
         FROM GND_DEVICE_STATUS a
         INNER JOIN GND_DEVICE_INFO d ON (a.device_id = d.device_id)
@@ -73,10 +75,9 @@
             , fnc_get_code_nm(d.device_type) as device_type_nm
             , a.device_status
             , fnc_get_code_nm(a.device_status) as device_status_nm
-            , DATE_FORMAT(a.init_comm_dt,'${prop.dt.plain}') as init_comm_dt
             , DATE_FORMAT(a.last_comm_dt,'${prop.dt.plain}') as last_comm_dt
-            , DATE_FORMAT(a.last_reg_dt,'${prop.dt.plain}') as last_reg_dt
-            , DATE_FORMAT(a.last_read_dt,'${prop.dt.plain}') as last_read_dt
+            , DATE_FORMAT(a.reg_dt,'${prop.dt.plain}') as reg_dt
+            , DATE_FORMAT(a.update_dt,'${prop.dt.plain}') as update_dt
             , a.server_id
         FROM GND_DEVICE_STATUS a
         INNER JOIN GND_DEVICE_INFO d ON (a.device_id = d.device_id)
@@ -88,19 +89,13 @@
             device_id
             , device_type
             , device_status
-            , init_comm_dt
             , last_comm_dt
-            , last_reg_dt
-            , last_read_dt
             , server_id
         ) values (
             #{deviceId}
             , #{deviceType}
             , #{deviceStatus}
-            , #{initCommDt}
             , #{lastCommDt}
-            , #{lastRegDt}
-            , #{lastReadDt}
             , #{serverId}
         )
     </insert>
