@@ -2,11 +2,10 @@ package com.nuri.green.device.rest;
 
 import com.nuri.green.constants.ErrorCode;
 import com.nuri.green.constants.ResultCode;
-import com.nuri.green.device.entity.Meter;
-import com.nuri.green.device.entity.MeterLocation;
-import com.nuri.green.device.entity.MeterRdo;
+import com.nuri.green.device.entity.*;
 import com.nuri.green.device.exception.AbstractBaseResource;
 import com.nuri.green.device.spec.MeterService;
+import com.nuri.green.device.spec.MeterStatusService;
 import com.nuri.green.store.page.PagingGridResult;
 import com.nuri.green.api.response.ResponseMessage;
 import io.swagger.annotations.Api;
@@ -15,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @Slf4j
 @Api(value = "AptInfoResource", tags = "GREEN-DEVICE-SERVICE")
@@ -26,9 +26,12 @@ public class MeterResource extends AbstractBaseResource {
     // TODO - ERROR 코드 변경
 
     private final MeterService meterService;
+    private final MeterStatusService meterStatusService;
 
-    public MeterResource(MeterService meterService) {
+
+    public MeterResource(MeterService meterService, MeterStatusService meterStatusService) {
         this.meterService = meterService;
+        this.meterStatusService = meterStatusService;
     }
 
     @ApiOperation(value = "IF-GND-DEVICE-013", notes = "미터 상세정보 조회")
@@ -106,6 +109,27 @@ public class MeterResource extends AbstractBaseResource {
             response = new ResponseMessage(ResultCode.Y, meterLocation);
         }
 
+        return response;
+    }
+
+    @ApiOperation(value = "IF-GND-DEVICE-029", notes = "미터 상태 목록 조회")
+    @GetMapping("/meter/status")
+    public ResponseMessage status(MeterStatus meterStatus, HttpServletRequest request) {
+
+        ResponseMessage response = null;
+
+        //TODO : meterSerial 검색 조건에 추가
+
+        PagingGridResult result = new PagingGridResult();
+        result.setDatas(this.meterStatusService.findAllByCondition(meterStatus));
+        result.setTotalCnt(this.meterStatusService.count(meterStatus));
+
+        if(result != null) {
+            response = new ResponseMessage(ResultCode.Y, result);
+        }else{
+            String errMsg = ErrorCode.E2001.getMsg();
+            response = new ResponseMessage(ResultCode.N, ErrorCode.E2001, errMsg);
+        }
         return response;
     }
 }

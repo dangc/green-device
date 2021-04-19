@@ -28,6 +28,7 @@
         <mapper resource="mybatis/mariadb/GwMapper.xml"/>
         <mapper resource="mybatis/mariadb/MeasurementPointMapper.xml"/>
         <mapper resource="mybatis/mariadb/MeterMapper.xml"/>
+        <mapper resource="mybatis/mariadb/MeterStatusMapper.xml"/>
         <mapper resource="mybatis/mariadb/ModemMapper.xml"/>
         <mapper resource="mybatis/mariadb/ServicePointMapper.xml"/>
         <mapper resource="mybatis/mariadb/VendorMapper.xml"/>

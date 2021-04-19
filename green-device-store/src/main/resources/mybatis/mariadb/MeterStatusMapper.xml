@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--***********************************
+* @Copyright : nuritelecom
+* @ProjectName : green-device-store
+* @FileName : MeterStausMapper.xml
+* @Author : yeonChoo
+* @Date : 2021-04
+************************************-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.nuri.green.device.store.mapper.MeterStatusMapper">
+
+    <sql id="base_where_list">
+        <where>
+            <if test="meterId != null and meterId != ''" >
+                AND ms.meter_id = #{meterId}
+            </if>
+            <if test="meterStatus != null and meterStatus != ''" >
+                AND ms.meter_status = #{meterStatus}
+            </if>
+            <if test="meterType != null and meterType != ''" >
+                AND ms.meter_type = #{meterType}
+            </if>
+            <if test="meterSerial != null and meterSerial != ''" >
+                AND mi.meter_serial like concat(#{meterSerial},'%')
+            </if>
+        </where>
+    </sql>
+
+    <sql id="order_by_list">
+        <if test="order != null" >
+            <foreach collection="order" item="orderby" open="order by" index="index" separator=",">
+                ${orderby.sort} ${orderby.dir}
+            </foreach>
+        </if>
+    </sql>
+
+    <sql id="page_limit">
+        <if test="page != null " >
+            LIMIT #{page.offset}, #{page.limit}
+        </if>
+    </sql>
+
+    <select id="findAllByCondition" resultType="meterStatusJpo" parameterType="meterStatusJpo">
+        SELECT
+            ms.meter_id
+            ,ms.meter_type
+            ,mi.meter_serial
+            ,fnc_get_code_nm(ms.meter_type) as meter_type_nm
+            ,ms.meter_status
+            ,fnc_get_code_nm(ms.meter_status) as meter_status_nm
+            ,DATE_FORMAT(ms.last_read_dt,'${prop.dt.plain}') as last_read_dt
+            ,DATE_FORMAT(ms.reg_dt,'${prop.dt.plain}') as reg_dt
+            ,DATE_FORMAT(ms.update_dt,'${prop.dt.plain}') as update_dt
+            ,ms.server_id
+        FROM GND_METER_STATUS ms
+        INNER JOIN gnd_meter_info mi on ms.meter_id = mi.meter_id
+        <include refid="base_where_list" />
+        <include refid="order_by_list" />
+        <include refid="page_limit" />
+    </select>
+
+    <select id="count" resultType="java.lang.Integer" parameterType="meterStatusJpo">
+        SELECT
+        count(*) as co
+        FROM GND_METER_STATUS ms
+        INNER JOIN gnd_meter_info mi on ms.meter_id = mi.meter_id
+        <include refid="base_where_list" />
+    </select>
+
+</mapper>
